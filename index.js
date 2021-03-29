@@ -18,48 +18,69 @@ class DehlaPakad extends React.Component{
                   trump: '',
                   turn: '',
                   lastHand: ''};
-
-    shuffle = () => {
-      for(let i = 51; i > 0; --i){
-        const j = Math.floor(Math.random() * (i+1));
-        const temp = deck[i];
-        deck[i] = deck[j];
-        deck[j] = temp;
-      }
+  }
+  
+  shuffle = () => {
+    for(let i = 51; i > 0; --i){
+      const j = Math.floor(Math.random() * (i+1));
+      const temp = deck[i];
+      deck[i] = deck[j];
+      deck[j] = temp;
     }
-
-    setPlayer1 = () => {
-      let arr = []
-      for(let i = 0; i < 52; i = i + 4){
-        arr += deck[i];
-      }
-      return arr;
+  }
+  
+  setPlayer1 = () => {
+    const arr = []
+    for(let i = 0; i < 52; i = i + 4){
+      arr.push(deck[i]);
     }
-
-    setPlayer2 = () => {
-      let arr = []
-      for(let i = 1; i < 52; i = i + 4){
-        arr += deck[i];
-      }
-      return arr;
+    return arr;
+  }
+  
+  setPlayer2 = () => {
+    let arr = []
+    for(let i = 1; i < 52; i = i + 4){
+      arr.push(deck[i]);
     }
-
-    setPlayer3 = () => {
-      let arr = []
-      for(let i = 2; i < 52; i = i + 4){
-        arr += deck[i];
-      }
-      return arr;
+    return arr;
+  }
+  
+  setPlayer3 = () => {
+    let arr = []
+    for(let i = 2; i < 52; i = i + 4){
+      arr.push(deck[i]);
     }
-
-    setPlayer4 = () => {
-      let arr = []
-      for(let i = 3; i < 52; i = i + 4){
-        arr += deck[i];
-      }
-      return arr;
+    return arr;
+  }
+  
+  setPlayer4 = () => {
+    let arr = []
+    for(let i = 3; i < 52; i = i + 4){
+      arr.push(deck[i]);
     }
+    return arr;
+  }
 
+  render(){
+    return(
+      <div>
+        <div className = 'player1'>
+          Player1
+        </div>
+        <div className = 'player2'>
+          Player2
+        </div>     
+        <div className = 'board' >
+          Board
+        </div>
+        <div className = 'player3'>
+          Player3
+        </div>
+        <div className = 'player4'>
+          Player4
+        </div>
+      </div>
+    )
   }
 }
 

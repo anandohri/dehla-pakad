@@ -11,10 +11,10 @@ class DehlaPakad extends React.Component{
   constructor(props){
     super(props);
     this.shuffle();
-    this.state = {player1: this.setPlayer1(),
-                  player2: this.setPlayer2(),
-                  player3: this.setPlayer3(),
-                  player4: this.setPlayer4(),
+    this.state = {player1: this.setPlayer(0),
+                  player2: this.setPlayer(1),
+                  player3: this.setPlayer(2),
+                  player4: this.setPlayer(3),
                   trump: '',
                   turn: '',
                   lastHand: ''};
@@ -29,55 +29,79 @@ class DehlaPakad extends React.Component{
     }
   }
   
-  setPlayer1 = () => {
+  setPlayer = (num) => {
     const arr = []
-    for(let i = 0; i < 52; i = i + 4){
+    for(let i = 0 + num; i < 52; i = i + 4){
       arr.push(deck[i]);
     }
     return arr;
   }
-  
-  setPlayer2 = () => {
-    let arr = []
-    for(let i = 1; i < 52; i = i + 4){
-      arr.push(deck[i]);
-    }
-    return arr;
+
+  handleMove = (i) => {
+    this.setState({turn: 'Player' + i})
   }
-  
-  setPlayer3 = () => {
-    let arr = []
-    for(let i = 2; i < 52; i = i + 4){
-      arr.push(deck[i]);
+
+  displayPlayer = (num) => {
+    const rows = []
+    for(let i = 0; i < 13; ++i){
+      if(num === 1){
+        const row = (
+          <div>
+            <button onClick = {(i) => this.handleMove(1)}>
+              {this.state.player1[i]}
+            </button>
+          </div>
+        )
+        rows.push(row);
+      }
+      else if(num === 2){
+        const row = (
+          <button onClick = {(i) => this.handleMove(2)}>
+            {this.state.player2[i]}
+          </button>
+        )
+        rows.push(row);
+      }
+      else if(num === 3){
+        const row = (
+          <div>
+            <button onClick = {(i) => this.handleMove(3)}>
+              {this.state.player3[i]}
+            </button>
+          </div>
+        )
+        rows.push(row);
+      }
+      else if(num === 4){
+        const row = (
+          <button onClick = {(i) => this.handleMove(4)}>
+            {this.state.player4[i]}
+          </button>
+        )
+        rows.push(row);
+      }
     }
-    return arr;
-  }
-  
-  setPlayer4 = () => {
-    let arr = []
-    for(let i = 3; i < 52; i = i + 4){
-      arr.push(deck[i]);
-    }
-    return arr;
+    return rows;
   }
 
   render(){
     return(
       <div>
         <div className = 'player1'>
-          Player1
+          {this.displayPlayer(1)}
         </div>
         <div className = 'player2'>
-          Player2
+          {this.displayPlayer(2)}
         </div>     
         <div className = 'board' >
           Board
+          {this.state.turn}
         </div>
         <div className = 'player3'>
-          Player3
+          {this.displayPlayer(3)}
         </div>
         <div className = 'player4'>
-          Player4
+          {this.displayPlayer(4)}
         </div>
       </div>
     )

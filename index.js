@@ -25,8 +25,8 @@ class DehlaPakad extends React.Component{
                   trump: '',
                   turn: 1,
                   pile: [],
-                  playerHands: [],
-                  handFirstTurn: 0,
+                  playerHands: [0, 0, 0, 0],
+                  handLastTurn: 0,
                   lastHand: ''};
   }
   
@@ -47,35 +47,96 @@ class DehlaPakad extends React.Component{
     return arr;
   }
 
-  handleMove = (j) => {
-    if(this.state.lastHand === ''){
-      const currentSuit = j.substring(j.length - 1, j.length);
-      if(this.state.turn === 1){
-        const arr = this.state.player1;
-        const pile = [j];
-        arr.splice(arr.indexOf(j), 1);
-        this.setState({player1: arr, player1Move: j, currentSuit: currentSuit, handFirstTurn: 1, turn: 2, pile: pile})
+  maximum = (arr) => {
+    for(let i = 0; i < 4; ++i){
+      if(arr[i] === 'A'){
+        arr[i] = 14;
       }
-      else if(this.state.turn === 2){
-        const arr = this.state.player2;
-        const pile = [j];
-        arr.splice(arr.indexOf(j), 1);
-        this.setState({player2: arr, player2Move: j, currentSuit: currentSuit, handFirstTurn: 2, turn: 3, pile: pile})
+      else if(arr[i] === 'J'){
+        arr[i] = 11;
       }
-      else if(this.state.turn === 3){
-        const arr = this.state.player3;
-        const pile = [j];
-        arr.splice(arr.indexOf(j), 1);
-        this.setState({player3: arr, player3Move: j, currentSuit: currentSuit, handFirstTurn: 3, turn: 4, pile: pile})
+      else if(arr[i] === 'Q'){
+        arr[i] = 12;
       }
-      else if(this.state.turn === 4){
-        const arr = this.state.player4;
-        const pile = [j];
-        arr.splice(arr.indexOf(j), 1);
-        this.setState({player4: arr, player4Move: j, currentSuit: currentSuit, handFirstTurn: 4, turn: 1, pile: pile})
+      else if(arr[i] === 'K'){
+        arr[i] = 13;
+      }
+      else{
+        arr[i] = parseInt(arr[i]);
       }
     }
-    else if(this.state.turn === this.state.handFirstTurn){
+
+    return arr.indexOf(Math.max.apply(null, arr)) + 1;
+  }
+
+  calcWinnerHandPlayer = () => {
+    const possibleWinner = [0, 0, 0, 0];
+    let isTrumpUsed = 'n'
+    let j = this.state.player1Move;
+    const player1Card = [j.substring(0, j.indexOf(' ')) , j.substring(j.length - 1, j.length)]
+    j = this.state.player2Move;
+    const player2Card = [j.substring(0, j.indexOf(' ')) , j.substring(j.length - 1, j.length)]
+    j = this.state.player3Move;
+    const player3Card = [j.substring(0, j.indexOf(' ')) , j.substring(j.length - 1, j.length)]
+    j = this.state.player4Move;
+    const player4Card = [j.substring(0, j.indexOf(' ')) , j.substring(j.length - 1, j.length)]
+
+    if (player1Card[1] === this.state.trump){
+      possibleWinner[0] = player1Card[0];
+      isTrumpUsed = 'y';
+    }
+
+    if (player2Card[1] === this.state.trump){
+      possibleWinner[1] = player2Card[0];
+      isTrumpUsed = 'y';
+    }
+
+    if (player3Card[1] === this.state.trump){
+      possibleWinner[2] = player3Card[0];
+      isTrumpUsed = 'y';
+    }
+
+    if (player4Card[1] === this.state.trump){
+      possibleWinner[3] = player4Card[0];
+      isTrumpUsed = 'y';
+    }
+
+    if(isTrumpUsed === 'n'){
+      if (player1Card[1] === this.state.currentSuit){
+        possibleWinner[0] = player1Card[0];
+      }
+  
+      if (player2Card[1] === this.state.currentSuit){
+        possibleWinner[1] = player2Card[0];
+      }
+  
+      if (player3Card[1] === this.state.currentSuit){
+        possibleWinner[2] = player3Card[0];
+      }
+  
+      if (player4Card[1] === this.state.currentSuit){
+        possibleWinner[3] = player4Card[0];
+      }
+    }
+
+    return this.maximum(possibleWinner);
+  }
+
+  handleMove = (j) => {
+    if(this.state.turn === this.state.handLastTurn){
+      if(this.state.turn === 1){
+        this.setState({player1Move: j});
+      }
+      else if(this.state.turn === 2){
+        this.setState({player2Move: j});
+      }
+      else if(this.state.turn === 3){
+        this.setState({player3Move: j});
+      }
+      else if(this.state.turn === 4){
+        this.setState({player4Move: j});
+      }
+
       const winnerHandPlayer = this.calcWinnerHandPlayer();
       const pile = this.state.pile;
       pile.push(this.state.player1Move);
@@ -84,7 +145,7 @@ class DehlaPakad extends React.Component{
       pile.push(this.state.player4Move);
       if(winnerHandPlayer === this.state.lastHand){
         const hands = this.state.playerHands;
-        hands[winnerHandPlayer - 1].concat(pile);
+        hands[winnerHandPlayer - 1] = hands[winnerHandPlayer - 1] === 0 ? pile : hands[winnerHandPlayer - 1].concat(pile);
         this.setState({player1Move: '',
           player2Move: '',
           player3Move: '',
@@ -93,7 +154,6 @@ class DehlaPakad extends React.Component{
           turn: winnerHandPlayer,
           pile: [],
           playerHands: hands,
-          handFirstTurn: winnerHandPlayer,
           lastHand: ''});
       }
       else{
@@ -104,15 +164,75 @@ class DehlaPakad extends React.Component{
           currentSuit: '',
           turn: winnerHandPlayer,
           pile: pile,
-          handFirstTurn: winnerHandPlayer,
           lastHand: winnerHandPlayer});
       }
+    }
+    else if(this.state.currentSuit === '') {
+      const currentSuit = j.substring(j.length - 1, j.length);
+      if(this.state.turn === 1){
+        const arr = this.state.player1;
+        const pile = [j];
+        arr.splice(arr.indexOf(j), 1);
+        this.setState({player1: arr, player1Move: j, currentSuit: currentSuit, handLastTurn: 4, turn: 2, pile: pile})
+      }
+      else if(this.state.turn === 2){
+        const arr = this.state.player2;
+        const pile = [j];
+        arr.splice(arr.indexOf(j), 1);
+        this.setState({player2: arr, player2Move: j, currentSuit: currentSuit, handLastTurn: 1, turn: 3, pile: pile})
+      }
+      else if(this.state.turn === 3){
+        const arr = this.state.player3;
+        const pile = [j];
+        arr.splice(arr.indexOf(j), 1);
+        this.setState({player3: arr, player3Move: j, currentSuit: currentSuit, handLastTurn: 2, turn: 4, pile: pile})
+      }
+      else if(this.state.turn === 4){
+        const arr = this.state.player4;
+        const pile = [j];
+        arr.splice(arr.indexOf(j), 1);
+        this.setState({player4: arr, player4Move: j, currentSuit: currentSuit, handLastTurn: 3, turn: 1, pile: pile})
+      }
+    }
+    else {
+      const currentMoveSuit = j.substring(j.length - 1, j.length);
+      let possibleTrump = this.state.trump;
+      if(this.state.trump === ''){
+        possibleTrump = this.state.currentSuit === currentMoveSuit ? '' : currentMoveSuit;
+      }
+      if(this.state.turn === 1){
+        const arr = this.state.player1;
+        const pile = [j];
+        arr.splice(arr.indexOf(j), 1);
+        this.setState({player1: arr, player1Move: j, turn: 2, pile: pile, trump: possibleTrump})
+      }
+      else if(this.state.turn === 2){
+        const arr = this.state.player2;
+        const pile = [j];
+        arr.splice(arr.indexOf(j), 1);
+        this.setState({player2: arr, player2Move: j, turn: 3, pile: pile, trump: possibleTrump})
+      }
+      else if(this.state.turn === 3){
+        const arr = this.state.player3;
+        const pile = [j];
+        arr.splice(arr.indexOf(j), 1);
+        this.setState({player3: arr, player3Move: j, turn: 4, pile: pile, trump: possibleTrump})
+      }
+      else if(this.state.turn === 4){
+        const arr = this.state.player4;
+        const pile = [j];
+        arr.splice(arr.indexOf(j), 1);
+        this.setState({player4: arr, player4Move: j, turn: 1, pile: pile, trump: possibleTrump})
+      }      
     }
   }
 
   displayPlayer = (num) => {
     const rows = []
-    for(let i = 0; i < 13; ++i){
+    const len = num === 1 ? this.state.player1.length :
+                  (num === 2 ? this.state.player2.length:
+                    (num === 3 ? this.state.player3.length : this.state.player4.length))
+    for(let i = 0; i < len; ++i){
       if(num === 1){
         const row = (
           <div>
@@ -163,9 +283,18 @@ class DehlaPakad extends React.Component{
           {this.displayPlayer(2)}
         </div>     
         <div className = 'board' >
-          Board
-          {this.state.turn}
-          {this.state.currentSuit}
+          <div className = 'player1board' >
+            {this.state.player1Move}
+          </div>
+          <div className = 'player2board' >
+          {this.state.player2Move}
+          </div>
+          <div className = 'player4board' >
+            {this.state.player4Move}
+          </div>
+          <div className = 'player3board' >
+            {this.state.player3Move}
+          </div>
         </div>
         <div className = 'player3'>
           {this.displayPlayer(3)}
@@ -173,33 +302,16 @@ class DehlaPakad extends React.Component{
         <div className = 'player4'>
           {this.displayPlayer(4)}
         </div>
+        turn: {this.state.turn}<br />
+        trump: {this.state.trump}<br />
+        currentSuit: {this.state.currentSuit}<br />
+        lastHand: {this.state.lastHand}<br />
+        first: {this.state.handLastTurn}<br />
+        Pl1-Hands: {this.state.playerHands[1]}<br />
+        Pl2-Hands: {this.state.playerHands[2]}<br />
+        Pl3-Hands: {this.state.playerHands[3]}<br />
+        Pl4-Hands: {this.state.playerHands[4]}
       </div>
-    )
-  }
-}
-
-class Test extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {str: ['asd', 'qwrwef', 'qwerty', 'tght']};
-    this.set();
-  }
-
-  set = () => {
-    let arr = this.state.str
-    let ind = arr.indexOf('qwerty');
-    arr.splice(ind, 1)
-    this.setState({str: arr})
-  }
-
-  render(){
-    
-    return(
-      <div>
-
-        {this.state.str}
-      </div>
-      
     )
   }
 }

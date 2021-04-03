@@ -281,13 +281,13 @@ class DehlaPakad extends React.Component{
         </div>
         <div className = 'player2'>
           {this.displayPlayer(2)}
-        </div>     
+        </div> 
         <div className = 'board' >
           <div className = 'player1board' >
             {this.state.player1Move}
           </div>
           <div className = 'player2board' >
-          {this.state.player2Move}
+            {this.state.player2Move}
           </div>
           <div className = 'player4board' >
             {this.state.player4Move}
@@ -299,18 +299,20 @@ class DehlaPakad extends React.Component{
         <div className = 'player3'>
           {this.displayPlayer(3)}
         </div>
+        <div className = 'stats' >
+          turn: {this.state.turn}<br />
+          trump: {this.state.trump}<br />
+          currentSuit: {this.state.currentSuit}<br />
+          lastHand: {this.state.lastHand}<br />
+          first: {this.state.handLastTurn}<br />
+          Pl1-Hands: {this.state.playerHands[0]}<br />
+          Pl2-Hands: {this.state.playerHands[1]}<br />
+          Pl3-Hands: {this.state.playerHands[2]}<br />
+          Pl4-Hands: {this.state.playerHands[3]}
+        </div>
         <div className = 'player4'>
           {this.displayPlayer(4)}
         </div>
-        turn: {this.state.turn}<br />
-        trump: {this.state.trump}<br />
-        currentSuit: {this.state.currentSuit}<br />
-        lastHand: {this.state.lastHand}<br />
-        first: {this.state.handLastTurn}<br />
-        Pl1-Hands: {this.state.playerHands[1]}<br />
-        Pl2-Hands: {this.state.playerHands[2]}<br />
-        Pl3-Hands: {this.state.playerHands[3]}<br />
-        Pl4-Hands: {this.state.playerHands[4]}
       </div>
     )
   }

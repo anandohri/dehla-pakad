@@ -60,7 +60,7 @@ code {
   height: 198px;
   border: 1px solid rgb(0, 0, 0);
   float: left;
-  background-color: #15934f;
+  background-color: #96af24;
 }
 
 .player2board {
@@ -68,7 +68,7 @@ code {
   height: 198px;
   border: 1px solid rgb(0, 0, 0);
   float: left;
-  background-color: #15934f;
+  background-color: #96af24;
 }
 
 .player3board {
@@ -76,7 +76,7 @@ code {
   height: 198px;
   border: 1px solid rgb(0, 0, 0);
   float: left;
-  background-color: #15934f;
+  background-color: #96af24;
 }
 
 .player4board {
@@ -84,7 +84,7 @@ code {
   height: 198px;
   border: 1px solid rgb(0, 0, 0);
   float: left;
-  background-color: #15934f;
+  background-color: #96af24;
 }
 
 .stats {
@@ -94,6 +94,6 @@ code {
   height: 198px;
   border: 1px solid rgb(0, 0, 0);
   float: left;
-  background-color: #341234;
+  background-color: #187536;
   text-align: justify;
 }

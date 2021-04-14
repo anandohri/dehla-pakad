@@ -124,8 +124,6 @@ class DehlaPakad extends React.Component{
 
   handleMove = (j) => {
     if(this.state.turn === this.state.handLastTurn){
-      let winnerHandPlayer;
-      
       if(this.state.turn === 1){
         this.setState({player1Move: j});
       }
@@ -136,10 +134,10 @@ class DehlaPakad extends React.Component{
         this.setState({player3Move: j});
       }
       else if(this.state.turn === 4){
-        this.setState({player4Move: j}, function () {winnerHandPlayer = this.calcWinnerHandPlayer();});
+        this.setState({player4Move: j});
       }
 
-      /*let winnerHandPlayer = this.calcWinnerHandPlayer();*/
+      const winnerHandPlayer = this.calcWinnerHandPlayer();
       const pile = this.state.pile;
       pile.push(this.state.player1Move);
       pile.push(this.state.player2Move);

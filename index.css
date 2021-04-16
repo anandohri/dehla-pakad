@@ -18,7 +18,7 @@ code {
   margin-top: 100px;
   border: 1px solid rgb(0, 0, 0);
   float: left;
-  background-color: #ff2413;
+  background-color: #ace267;
 }
 
 .player2 {
@@ -27,7 +27,7 @@ code {
   margin-left: 100px;
   border: 1px solid rgb(0, 0, 0);
   float: top;
-  background-color: #ff2413;
+  background-color: #ace267;
 }
 
 .player3 {
@@ -35,7 +35,7 @@ code {
   height: 400px;
   border: 1px solid rgb(0, 0, 0);
   float: left;
-  background-color: #ff2413;
+  background-color: #ace267;
 }
 
 .player4 {
@@ -45,7 +45,7 @@ code {
   margin-top: 400px;
   border: 1px solid rgb(0, 0, 0);
   float: bottom;
-  background-color: #ff2413;
+  background-color: #ace267;
 }
 
 .board {

@@ -136,7 +136,7 @@ class DehlaPakad extends React.Component{
       else if(this.state.turn === 4){
         this.setState({player4Move: j});
       }
-
+	  
       const winnerHandPlayer = this.calcWinnerHandPlayer();
       const pile = this.state.pile;
       pile.push(this.state.player1Move);

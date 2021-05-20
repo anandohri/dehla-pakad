@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {w3cwebsocket as W3CWebsocket} from 'websocket';
 
-const client = new W3CWebsocket ('ws://192.168.0.199:8000');
+const client = new W3CWebsocket ('ws://192.168.29.116:8000');
 
 
 class DehlaPakad extends React.Component{
@@ -15,11 +15,20 @@ class DehlaPakad extends React.Component{
                   readyToStart: false};
   }
 
+  handleUName = (e) => {
+    this.setState({userName: e.target.value});
+  }
+
   handleLogin = (val) => {
-    client.send(JSON.stringify({
-      type: 'login',
-      userName: val
-    }));
+    if(this.state.userName != ''){
+      client.send(JSON.stringify({
+        type: 'login',
+        userName: val
+      }));
+    }
+    else{
+      alert('Enter Username');
+    }
   }
 
   componentDidMount(){
@@ -43,10 +52,30 @@ class DehlaPakad extends React.Component{
 
   render(){
     return(
-      <button onClick = {() => this.handleLogin(this.state.userName)}>
-        Login
-      </button>
+      <div>
+        {this.state.isLoggedIn ? 
+          <div>
+              Details<br />
+              UserID: {this.state.userId} <br />
+              UserName: {this.state.userName}
+          </div>
+          : <div>
+              <p className = 'header'>Delha Pakad</p>
+              <br />
+              <input className = 'userName' placeholder = 'Enter Username' onChange = {this.handleUName} />
+              <button className = 'login' onClick = {() => this.handleLogin(this.state.userName)}>
+                Login
+              </button>
+            </div>
+        }
+      </div>
     )
+  }
+}
+
+class Test extends React.Component{
+  render(){
+    return('Testing');
   }
 }
 

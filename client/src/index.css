@@ -5,9 +5,37 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #6da7e6;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.userName {
+  margin-left: 29.4%;
+  border-radius: 20px;
+  height: 40px;
+  width: 450px;
+  border-width: 2px;
+  border-style: ridge;
+  background-color: #f09e6c;
+}
+
+.login {
+  font-size: 22px;
+  border-radius: 23px;
+  height: 45px;
+  width: 150px;
+  margin-left: 20px;
+  background-color: #ff091b;
+}
+
+.header {
+  text-align: center;
+  font-size: 120px;
+  font-weight: 800;
+  font-family: 'Girassol', cursive;
+  margin-bottom: 2%;
 }

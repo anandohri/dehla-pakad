@@ -11,6 +11,8 @@ class DehlaPakad extends React.Component{
     super(props);
     this.state = {userId: 0,
                   userName: '',
+                  team: 0,
+                  cards: [],
                   isLoggedIn: false,
                   readyToStart: false};
   }
@@ -19,15 +21,20 @@ class DehlaPakad extends React.Component{
     this.setState({userName: e.target.value});
   }
 
-  handleLogin = (val) => {
-    if(this.state.userName != ''){
+  handleTeam = (e) => {
+    this.setState({team: e.target.value});
+  }
+
+  handleLogin = () => {
+    if(this.state.userName !== '' && this.state.team != 0){
       client.send(JSON.stringify({
         type: 'login',
-        userName: val
+        userName: this.state.userName,
+        team: this.state.team
       }));
     }
     else{
-      alert('Enter Username');
+      alert('Please fill all the details');
     }
   }
 
@@ -41,11 +48,14 @@ class DehlaPakad extends React.Component{
       if(dataFromServer.type === 'login'){
         this.setState({userId: dataFromServer.id, isLoggedIn: true});
       }
-      else if(dataFromServer.type === 'failed'){
+      else if(dataFromServer.type === 'roomFull'){
         alert('Room Full');
       }
+      else if(dataFromServer.type === 'teamFull'){
+        alert('Team full, please try other team');
+      }
       else if(dataFromServer.type === 'ready'){
-        this.setState({readyToStart: true});
+        this.setState({readyToStart: true, cards: dataFromServer.cards});
       }
     }
   }
@@ -55,17 +65,32 @@ class DehlaPakad extends React.Component{
       <div>
         {this.state.isLoggedIn ? 
           <div>
-              Details<br />
-              UserID: {this.state.userId} <br />
-              UserName: {this.state.userName}
+            {this.state.readyToStart ?
+              <div>
+                Details<br />
+                UserID: {this.state.userId} <br />
+                UserName: {this.state.userName} <br />
+                Team: {this.state.team} <br />
+                Cards: {this.state.cards}
+              </div>
+            : 'Waiting for other player to join.'}
           </div>
           : <div>
               <p className = 'header'>Delha Pakad</p>
               <br />
               <input className = 'userName' placeholder = 'Enter Username' onChange = {this.handleUName} />
-              <button className = 'login' onClick = {() => this.handleLogin(this.state.userName)}>
+              <button className = 'login' onClick = {this.handleLogin}>
                 Login
               </button>
+              <br />
+              <div className = 'selectTeam'>
+                Select Team:
+                <select className = 'team' onChange = {this.handleTeam} >
+                  <option value = '0' />
+                  <option value = '1' >Team 1</option>
+                  <option value = '2' >Team 2</option>
+                </select>
+              </div>
             </div>
         }
       </div>
@@ -75,7 +100,7 @@ class DehlaPakad extends React.Component{
 
 class Test extends React.Component{
   render(){
-    return('Testing');
+    return('test'.substring(0, 'test'.indexOf('s')));
   }
 }
 

@@ -14,6 +14,7 @@ code {
 }
 
 .userName {
+  font-size: 18px;
   margin-left: 29.4%;
   border-radius: 20px;
   height: 40px;
@@ -30,6 +31,22 @@ code {
   width: 150px;
   margin-left: 20px;
   background-color: #ff091b;
+}
+
+.team {
+  font-size: 18px;
+  border-radius: 23px;
+  border-width: 2px;
+  border-style: ridge;
+  height: 45px;
+  width: 150px;
+  margin-left: 20px;
+  background-color: #f09e6c;
+}
+
+.selectTeam {
+  margin-top: 10px;
+  margin-left: 42.6%;
 }
 
 .header {

@@ -13,6 +13,12 @@ class DehlaPakad extends React.Component{
                   userName: '',
                   team: 0,
                   cards: [],
+                  turn: 0,
+                  roundStartsWith: 0,
+                  currentSuit: 'NA',
+                  currentRoundMoves: ['', '', '', ''],
+                  trump: 'NA',
+                  previousRoundWinner: 0,
                   isLoggedIn: false,
                   readyToStart: false};
   }
@@ -38,6 +44,161 @@ class DehlaPakad extends React.Component{
     }
   }
 
+  handleCardClick = (e) => {
+    if(this.state.turn == this.state.userId){
+      let next = 0;
+      if(this.state.turn == 4){
+        next = 1;
+      }
+      else{
+        next = this.state.turn + 1;
+      }
+      let index = this.state.cards.indexOf(e.target.value);
+      this.state.cards.splice(index, 1);
+      if(this.state.currentSuit == 'NA'){
+        client.send(JSON.stringify({
+          type: 'firstMove',
+          userId: this.state.userId,
+          move: e.target.value
+        }));
+      }
+      else if(this.state.trump == 'NA' && this.state.currentSuit != e.target.value.substring(0,1)){
+        client.send(JSON.stringify({
+          type: 'setTrump',
+          userId: this.state.userId,
+          move: e.target.value
+        }));
+      }
+      else if(next == this.state.roundStartsWith){
+        client.send(JSON.stringify({
+          type: 'roundOver',
+          userId: this.state.userId,
+          move: e.target.value
+        }));
+      }
+      else{
+        client.send(JSON.stringify({
+          type: 'move',
+          userId: this.state.userId,
+          move: e.target.value
+        }));
+      }
+    }
+  }
+  
+  renderBoard = () => {
+    const board = [];
+    const curr = ['','','','',''];
+    if(this.state.turn == 1){
+      curr[1] = 'current';
+    }
+    else if(this.state.turn == 2){
+      curr[2] = 'current';
+    }
+    else if(this.state.turn == 3){
+      curr[3] = 'current';
+    }
+    else if(this.state.turn == 4){
+      curr[4] = 'current';
+    }
+    if(this.state.userId == 1){
+      board.push(<div>
+                    <div className = {curr[3] + 'placement2'}>
+                      Player 3
+                      {this.state.currentRoundMoves[3]}
+                    </div>
+                    <div className = {curr[2] + 'placement1'}>
+                      Player 2
+                      {this.state.currentRoundMoves[2]}
+                    </div>
+                    <div className = 'pile'>
+                      Here lies the Pile.
+                    </div>
+                    <div className = {curr[4] + 'placement3'}>
+                      Player 4
+                      {this.state.currentRoundMoves[4]}
+                    </div>
+                    <div className = {curr[1] + 'placement4'}>
+                      Player 1
+                      {this.state.currentRoundMoves[1]}
+                    </div>
+                  </div>);
+    }
+    else if(this.state.userId == 2){
+      board.push(<div>
+                    <div className = {curr[4] + 'placement2'}>
+                      Player 4
+                      {this.state.currentRoundMoves[4]}
+                    </div>
+                    <div className = {curr[3] + 'placement1'}>
+                      Player 3
+                      {this.state.currentRoundMoves[3]}
+                    </div>
+                    <div className = 'pile'>
+                      Here lies the Pile.
+                    </div>
+                    <div className = {curr[1] + 'placement3'}>
+                      Player 1
+                      {this.state.currentRoundMoves[1]}
+                    </div>
+                    <div className = {curr[2] + 'placement4'}>
+                      Player 2
+                      {this.state.currentRoundMoves[2]}
+                    </div>
+                  </div>);
+    }
+    else if(this.state.userId == 3){
+      board.push(<div>
+                    <div className = {curr[1] + 'placement2'}>
+                      Player 1
+                      {this.state.currentRoundMoves[1]}
+                    </div>
+                    <div className = {curr[4] + 'placement1'}>
+                      Player 4
+                      {this.state.currentRoundMoves[4]}
+                    </div>
+                    <div className = 'pile'>
+                      Here lies the Pile.
+                    </div>
+                    <div className = {curr[2] + 'placement3'}>
+                      Player 2
+                      {this.state.currentRoundMoves[2]}
+                    </div>
+                    <div className = {curr[3] + 'placement4'}>
+                      Player 3
+                      {this.state.currentRoundMoves[3]}
+                    </div>
+                  </div>);
+    }
+    else if(this.state.userId == 4){
+      board.push(<div>
+                    <div className = {curr[2] + 'placement2'}>
+                      Player 2
+                      {this.state.currentRoundMoves[2]}
+                    </div>
+                    <div className = {curr[1] + 'placement1'}>
+                      Player 1
+                      {this.state.currentRoundMoves[1]}
+                    </div>
+                    <div className = 'pile'>
+                      Here lies the Pile.
+                    </div>
+                    <div className = {curr[3] + 'placement3'}>
+                      Player 3
+                      {this.state.currentRoundMoves[3]}
+                    </div>
+                    <div className = {curr[4] + 'placement4'}>
+                      Player 4
+                      {this.state.currentRoundMoves[4]}
+                    </div>
+                  </div>);
+    }
+    board.push(<div className = 'placement5'>
+                  {this.state.cards}
+                </div>);
+    return board;
+  }
+
   componentDidMount(){
     client.onopen = () => {
       console.log('Connected');
@@ -55,7 +216,39 @@ class DehlaPakad extends React.Component{
         alert('Team full, please try other team');
       }
       else if(dataFromServer.type === 'ready'){
-        this.setState({readyToStart: true, cards: dataFromServer.cards});
+        this.setState({readyToStart: true, cards: dataFromServer.cards, turn: 1, roundStartsWith: 1});
+      }
+      else{
+        const thisRound = this.state.currentRoundMoves.slice();
+        thisRound[dataFromServer.userId] = dataFromServer.move;
+        let next = 0;
+        if(this.state.turn == 4){
+          next = 1;
+        }
+        else{
+          next = this.state.turn + 1;
+        }
+        if(dataFromServer.type === 'firstMove'){
+          this.setState({roundStartsWith: dataFromServer.userId,
+                          turn: next,
+                          currentRoundMoves: thisRound,
+                          currentSuit: dataFromServer.move.substring(0,1)
+                        });
+        }
+        else if(dataFromServer.type === 'setTrump'){
+          this.setState({turn: next,
+                          currentRoundMoves: thisRound,
+                          trump: dataFromServer.move.substring(0,1)
+                        });
+        }
+        else if(dataFromServer.type === 'roundOver'){
+          
+        }
+        else if(dataFromServer.type === 'move'){
+          this.setState({turn: next,
+                          currentRoundMoves: thisRound
+          });
+        }
       }
     }
   }
@@ -66,14 +259,10 @@ class DehlaPakad extends React.Component{
         {this.state.isLoggedIn ? 
           <div>
             {this.state.readyToStart ?
-              <div>
-                Details<br />
-                UserID: {this.state.userId} <br />
-                UserName: {this.state.userName} <br />
-                Team: {this.state.team} <br />
-                Cards: {this.state.cards}
+              <div className = 'board'>
+                {this.renderBoard()}
               </div>
-            : 'Waiting for other player to join.'}
+              : 'Waiting for other Player to join.'}
           </div>
           : <div>
               <p className = 'header'>Delha Pakad</p>
@@ -100,7 +289,7 @@ class DehlaPakad extends React.Component{
 
 class Test extends React.Component{
   render(){
-    return('test'.substring(0, 'test'.indexOf('s')));
+    return('test'.substring(0, 1));
   }
 }
 

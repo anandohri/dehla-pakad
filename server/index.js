@@ -90,6 +90,12 @@ wsServer.on('request', function(request){
           connection.send(JSON.stringify({type: 'roomFull'}));
         }
       }
+      else{
+        for(key in players){
+          move['cards'] = cards[key];
+          players[key].send(JSON.stringify(move));
+        }
+      }
     }
   });
 });

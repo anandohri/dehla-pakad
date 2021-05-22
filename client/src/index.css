@@ -56,3 +56,91 @@ code {
   font-family: 'Girassol', cursive;
   margin-bottom: 2%;
 }
+
+.placement1 {
+  position: absolute;
+  min-height: 40%;
+  min-width: 25%;
+  max-width: 25%;
+  margin-top: 10%;
+}
+
+.placement2 {
+  position: absolute;
+  min-width: 50%;
+  min-height: 20%;
+  max-width: 50%;
+  margin-left: 25%;
+}
+
+.placement3 {
+  position: absolute;
+  min-height: 40%;
+  min-width: 25%;
+  max-width: 25%;
+  margin-top: 10%;
+  margin-left: 75%;
+}
+
+.placement4 {
+  position: absolute;
+  min-height: 20%;
+  min-width: 50%;
+  max-width: 50%;
+  margin-left: 25%;
+  margin-top: 30%;
+}
+
+.placement5 {
+  position: absolute;
+  min-height: 20%;
+  min-width: 100%;
+  margin-top: 40%;
+}
+
+.pile {
+  position: absolute;
+  min-height: 40%;
+  min-width: 48%;
+  max-width: 48%;
+  margin-top: 10%;
+  margin-left: 25%;
+}
+
+.currentplacement1 {
+  position: absolute;
+  background-color: #ff0000;
+  min-height: 40%;
+  min-width: 25%;
+  max-width: 25%;
+  margin-top: 10%;
+}
+
+.currentplacement2 {
+  position: absolute;
+  background-color: #ff0000;
+  min-width: 50%;
+  min-height: 20%;
+  max-width: 50%;
+  margin-left: 25%;
+}
+
+.currentplacement3 {
+  position: absolute;
+  background-color: #ff0000;
+  min-height: 40%;
+  min-width: 25%;
+  max-width: 25%;
+  margin-top: 10%;
+  margin-left: 75%;
+}
+
+.currentplacement4 {
+  position: absolute;
+  background-color: #ff0000;
+  min-height: 20%;
+  min-width: 50%;
+  max-width: 50%;
+  margin-left: 25%;
+  margin-top: 30%;
+}

@@ -16,7 +16,9 @@ class DehlaPakad extends React.Component{
                   turn: 0,
                   roundStartsWith: 0,
                   currentSuit: 'NA',
-                  currentRoundMoves: ['', '', '', ''],
+                  currentRoundMoves: {},
+                  pile: [],
+                  hands: {1: [], 2: []},
                   trump: 'NA',
                   previousRoundWinner: 0,
                   isLoggedIn: false,
@@ -69,6 +71,14 @@ class DehlaPakad extends React.Component{
           move: e.target.value
         }));
       }
+      else if(this.state.trump == 'NA' && this.state.currentSuit != e.target.value.substring(0,1)
+                && next == this.state.roundStartsWith){
+        client.send(JSON.stringify({
+          type: 'setTrumpandOver',
+          userId: this.state.userId,
+          move: e.target.value
+        }));
+      }
       else if(next == this.state.roundStartsWith){
         client.send(JSON.stringify({
           type: 'roundOver',
@@ -85,10 +95,20 @@ class DehlaPakad extends React.Component{
       }
     }
   }
+
+  renderCards = () =>{
+    const card = [];
+    for(let i = 0; i < this.state.cards.length; ++i){
+      card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+                    {this.state.cards[i]}
+                  </button>);
+    }
+    return card;
+  }
   
   renderBoard = () => {
     const board = [];
-    const curr = ['','','','',''];
+    const curr = {1: '', 2: '', 3: '', 4: ''};
     if(this.state.turn == 1){
       curr[1] = 'current';
     }
@@ -104,22 +124,26 @@ class DehlaPakad extends React.Component{
     if(this.state.userId == 1){
       board.push(<div>
                     <div className = {curr[3] + 'placement2'}>
-                      Player 3
+                      Player 3:
                       {this.state.currentRoundMoves[3]}
                     </div>
                     <div className = {curr[2] + 'placement1'}>
-                      Player 2
+                      Player 2:
                       {this.state.currentRoundMoves[2]}
                     </div>
                     <div className = 'pile'>
-                      Here lies the Pile.
+                      turn: {this.state.turn} <br />
+                      trump: {this.state.trump} <br />
+                      currentSuit: {this.state.currentSuit} <br />
+                      previousRoundWinner: {this.state.previousRoundWinner} <br />
+                      roundStartsWith: {this.state.roundStartsWith}
                     </div>
                     <div className = {curr[4] + 'placement3'}>
-                      Player 4
+                      Player 4:
                       {this.state.currentRoundMoves[4]}
                     </div>
                     <div className = {curr[1] + 'placement4'}>
-                      Player 1
+                      Player 1:
                       {this.state.currentRoundMoves[1]}
                     </div>
                   </div>);
@@ -127,22 +151,26 @@ class DehlaPakad extends React.Component{
     else if(this.state.userId == 2){
       board.push(<div>
                     <div className = {curr[4] + 'placement2'}>
-                      Player 4
+                      Player 4:
                       {this.state.currentRoundMoves[4]}
                     </div>
                     <div className = {curr[3] + 'placement1'}>
-                      Player 3
+                      Player 3:
                       {this.state.currentRoundMoves[3]}
                     </div>
                     <div className = 'pile'>
-                      Here lies the Pile.
+                      turn: {this.state.turn} <br />
+                      trump: {this.state.trump} <br />
+                      currentSuit: {this.state.currentSuit} <br />
+                      previousRoundWinner: {this.state.previousRoundWinner} <br />
+                      roundStartsWith: {this.state.roundStartsWith}
                     </div>
                     <div className = {curr[1] + 'placement3'}>
-                      Player 1
+                      Player 1:
                       {this.state.currentRoundMoves[1]}
                     </div>
                     <div className = {curr[2] + 'placement4'}>
-                      Player 2
+                      Player 2:
                       {this.state.currentRoundMoves[2]}
                     </div>
                   </div>);
@@ -150,22 +178,26 @@ class DehlaPakad extends React.Component{
     else if(this.state.userId == 3){
       board.push(<div>
                     <div className = {curr[1] + 'placement2'}>
-                      Player 1
+                      Player 1:
                       {this.state.currentRoundMoves[1]}
                     </div>
                     <div className = {curr[4] + 'placement1'}>
-                      Player 4
+                      Player 4:
                       {this.state.currentRoundMoves[4]}
                     </div>
                     <div className = 'pile'>
-                      Here lies the Pile.
+                      turn: {this.state.turn} <br />
+                      trump: {this.state.trump} <br />
+                      currentSuit: {this.state.currentSuit} <br />
+                      previousRoundWinner: {this.state.previousRoundWinner} <br />
+                      roundStartsWith: {this.state.roundStartsWith}
                     </div>
                     <div className = {curr[2] + 'placement3'}>
-                      Player 2
+                      Player 2:
                       {this.state.currentRoundMoves[2]}
                     </div>
                     <div className = {curr[3] + 'placement4'}>
-                      Player 3
+                      Player 3:
                       {this.state.currentRoundMoves[3]}
                     </div>
                   </div>);
@@ -173,30 +205,118 @@ class DehlaPakad extends React.Component{
     else if(this.state.userId == 4){
       board.push(<div>
                     <div className = {curr[2] + 'placement2'}>
-                      Player 2
+                      Player 2:
                       {this.state.currentRoundMoves[2]}
                     </div>
                     <div className = {curr[1] + 'placement1'}>
-                      Player 1
+                      Player 1:
                       {this.state.currentRoundMoves[1]}
                     </div>
                     <div className = 'pile'>
-                      Here lies the Pile.
+                      turn: {this.state.turn} <br />
+                      trump: {this.state.trump} <br />
+                      currentSuit: {this.state.currentSuit} <br />
+                      previousRoundWinner: {this.state.previousRoundWinner} <br />
+                      roundStartsWith: {this.state.roundStartsWith}
                     </div>
                     <div className = {curr[3] + 'placement3'}>
-                      Player 3
+                      Player 3:
                       {this.state.currentRoundMoves[3]}
                     </div>
                     <div className = {curr[4] + 'placement4'}>
-                      Player 4
+                      Player 4:
                       {this.state.currentRoundMoves[4]}
                     </div>
                   </div>);
     }
     board.push(<div className = 'placement5'>
-                  {this.state.cards}
+                  {this.renderCards()}
                 </div>);
     return board;
+  }
+
+  calcRoundWinner = () => {
+    let highest = 0;
+    let winner = 0;
+    let Team1hand = this.state.hands[1].slice();
+    let Team2hand = this.state.hands[2].slice();
+    let pile = this.state.pile.slice();
+    
+    if(this.state.currentRoundMoves[1].substring(0,1) == this.state.currentSuit
+        && this.state.currentRoundMoves[2].substring(0,1) == this.state.currentSuit
+        && this.state.currentRoundMoves[3].substring(0,1) == this.state.currentSuit
+        && this.state.currentRoundMoves[4].substring(0,1) == this.state.currentSuit){
+      for(let i = 1; i <=4; ++i){
+        if(this.state.currentRoundMoves[i].substring(1) > highest){
+          highest = this.state.currentRoundMoves[i].substring(1);
+          winner = i;
+        }
+      }
+    }
+    else if(this.state.currentRoundMoves[1].substring(0,1) != this.state.trump
+              && this.state.currentRoundMoves[2].substring(0,1) != this.state.trump
+              && this.state.currentRoundMoves[3].substring(0,1) != this.state.trump
+              && this.state.currentRoundMoves[4].substring(0,1) != this.state.trump){
+      for(let i = 1; i <=4; ++i){
+        if(this.state.currentRoundMoves[i].substring(1) > highest
+            && this.state.currentRoundMoves[i].substring(0,1) == this.state.currentSuit){
+          highest = this.state.currentRoundMoves[i].substring(1);
+          winner = i;
+        }
+      }
+    }
+    else{
+      for(let i = 1; i <=4; ++i){
+        if(this.state.currentRoundMoves[i].substring(1) > highest
+            && this.state.currentRoundMoves[i].substring(0,1) == this.state.trump){
+          highest = this.state.currentRoundMoves[i].substring(1);
+          winner = i;
+        }
+      }
+    }
+
+    for(let i = 1; i <= 4; ++i){
+      pile = pile.concat(this.state.currentRoundMoves[i]);
+    }
+    
+    if(this.state.cards.length == 0){
+      if(winner == 1 || winner == 3){
+        Team1hand = this.state.hands[1].concat(pile);
+      }
+      else{
+        Team2hand = this.state.hands[2].concat(pile);
+      }
+      this.setState({pile: [],
+                      hands: {1: Team1hand, 2: Team2hand},
+                      previousRoundWinner: winner
+      });
+      this.calcGameWinner();
+    }
+    else{
+      if(winner == this.state.previousRoundWinner){
+        if(winner == 1 || winner == 3){
+          Team1hand = this.state.hands[1].concat(pile);
+        }
+        else{
+          Team2hand = this.state.hands[2].concat(pile);
+        }
+        this.setState({turn: winner,
+                        hands: {1: Team1hand, 2: Team2hand},
+                        previousRoundWinner: 0,
+                        pile: [],
+                        currentRoundMoves: {},
+                        roundStartsWith: winner
+        });
+      }
+      else{
+        this.setState({turn: winner,
+                        previousRoundWinner: winner,
+                        pile: pile,
+                        currentRoundMove: {},
+                        roundStartsWith: winner
+        });
+      }
+    }
   }
 
   componentDidMount(){
@@ -219,7 +339,7 @@ class DehlaPakad extends React.Component{
         this.setState({readyToStart: true, cards: dataFromServer.cards, turn: 1, roundStartsWith: 1});
       }
       else{
-        const thisRound = this.state.currentRoundMoves.slice();
+        const thisRound = this.state.currentRoundMoves;
         thisRound[dataFromServer.userId] = dataFromServer.move;
         let next = 0;
         if(this.state.turn == 4){
@@ -241,8 +361,18 @@ class DehlaPakad extends React.Component{
                           trump: dataFromServer.move.substring(0,1)
                         });
         }
+        else if(dataFromServer.type === 'setTrumpandOver'){
+          this.setState({currentRoundMoves: thisRound,
+                          trump: dataFromServer.move.substring(0,1)
+                        });
+          next = this.calcRoundWinner();
+          this.setState({turn: next});
+        }
         else if(dataFromServer.type === 'roundOver'){
-          
+          this.setState({currentRoundMoves: thisRound
+          });
+          next = this.calcRoundWinner();
+          this.setState({turn: next});
         }
         else if(dataFromServer.type === 'move'){
           this.setState({turn: next,
@@ -288,8 +418,14 @@ class DehlaPakad extends React.Component{
 }
 
 class Test extends React.Component{
+  abc = () => {
+    const a = {1: '', 2: ''};
+    a[1] = 'aas';
+    return a;
+  }
+
   render(){
-    return('test'.substring(0, 1));
+    return(this.abc());
   }
 }
 

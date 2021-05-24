@@ -22,7 +22,10 @@ class DehlaPakad extends React.Component{
                   trump: 'NA',
                   previousRoundWinner: 0,
                   isLoggedIn: false,
-                  readyToStart: false};
+                  readyToStart: false,
+                  team1points: 0,
+                  team2points: 0,
+                  currentGameWinner: 0};
   }
 
   handleUName = (e) => {
@@ -99,9 +102,31 @@ class DehlaPakad extends React.Component{
   renderCards = () =>{
     const card = [];
     for(let i = 0; i < this.state.cards.length; ++i){
-      card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
-                    {this.state.cards[i]}
-                  </button>);
+      if(this.state.cards[i].substring(1) == '14'){
+        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          {this.state.cards[i].substring(0,1) + 'A'}
+        </button>);
+      }
+      else if(this.state.cards[i].substring(1) == '13'){
+        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          {this.state.cards[i].substring(0,1) + 'K'}
+        </button>);
+      }
+      else if(this.state.cards[i].substring(1) == '12'){
+        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          {this.state.cards[i].substring(0,1) + 'Q'}
+        </button>);
+      }
+      else if(this.state.cards[i].substring(1) == '11'){
+        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          {this.state.cards[i].substring(0,1) + 'J'}
+        </button>);
+      }
+      else{
+        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          {this.state.cards[i]}
+        </button>);
+      }      
     }
     return card;
   }
@@ -109,7 +134,15 @@ class DehlaPakad extends React.Component{
   renderBoard = () => {
     const board = [];
     const curr = {1: '', 2: '', 3: '', 4: ''};
-    if(this.state.turn == 1){
+    if(this.state.winner == 1){
+      curr[1] = 'winner';
+      curr[3] = 'winner';
+    }
+    else if(this.state.winner == 2){
+      curr[2] = 'winner';
+      curr[4] = 'winner';
+    }
+    else if(this.state.turn == 1){
       curr[1] = 'current';
     }
     else if(this.state.turn == 2){
@@ -136,7 +169,10 @@ class DehlaPakad extends React.Component{
                       trump: {this.state.trump} <br />
                       currentSuit: {this.state.currentSuit} <br />
                       previousRoundWinner: {this.state.previousRoundWinner} <br />
-                      roundStartsWith: {this.state.roundStartsWith}
+                      roundStartsWith: {this.state.roundStartsWith} <br />
+                      pile: {this.state.pile} <br />
+                      team1hands: {this.state.hands[1]} <br />
+                      team2hands: {this.state.hands[2]}
                     </div>
                     <div className = {curr[4] + 'placement3'}>
                       Player 4:
@@ -163,7 +199,10 @@ class DehlaPakad extends React.Component{
                       trump: {this.state.trump} <br />
                       currentSuit: {this.state.currentSuit} <br />
                       previousRoundWinner: {this.state.previousRoundWinner} <br />
-                      roundStartsWith: {this.state.roundStartsWith}
+                      roundStartsWith: {this.state.roundStartsWith} <br />
+                      pile: {this.state.pile} <br />
+                      team1hands: {this.state.hands[1]} <br />
+                      team2hands: {this.state.hands[2]}
                     </div>
                     <div className = {curr[1] + 'placement3'}>
                       Player 1:
@@ -190,7 +229,10 @@ class DehlaPakad extends React.Component{
                       trump: {this.state.trump} <br />
                       currentSuit: {this.state.currentSuit} <br />
                       previousRoundWinner: {this.state.previousRoundWinner} <br />
-                      roundStartsWith: {this.state.roundStartsWith}
+                      roundStartsWith: {this.state.roundStartsWith} <br />
+                      pile: {this.state.pile} <br />
+                      team1hands: {this.state.hands[1]} <br />
+                      team2hands: {this.state.hands[2]}
                     </div>
                     <div className = {curr[2] + 'placement3'}>
                       Player 2:
@@ -217,7 +259,10 @@ class DehlaPakad extends React.Component{
                       trump: {this.state.trump} <br />
                       currentSuit: {this.state.currentSuit} <br />
                       previousRoundWinner: {this.state.previousRoundWinner} <br />
-                      roundStartsWith: {this.state.roundStartsWith}
+                      roundStartsWith: {this.state.roundStartsWith} <br />
+                      pile: {this.state.pile} <br />
+                      team1hands: {this.state.hands[1]} <br />
+                      team2hands: {this.state.hands[2]}
                     </div>
                     <div className = {curr[3] + 'placement3'}>
                       Player 3:
@@ -247,7 +292,7 @@ class DehlaPakad extends React.Component{
         && this.state.currentRoundMoves[3].substring(0,1) == this.state.currentSuit
         && this.state.currentRoundMoves[4].substring(0,1) == this.state.currentSuit){
       for(let i = 1; i <=4; ++i){
-        if(this.state.currentRoundMoves[i].substring(1) > highest){
+        if(parseInt(this.state.currentRoundMoves[i].substring(1)) > parseInt(highest)){
           highest = this.state.currentRoundMoves[i].substring(1);
           winner = i;
         }
@@ -258,7 +303,7 @@ class DehlaPakad extends React.Component{
               && this.state.currentRoundMoves[3].substring(0,1) != this.state.trump
               && this.state.currentRoundMoves[4].substring(0,1) != this.state.trump){
       for(let i = 1; i <=4; ++i){
-        if(this.state.currentRoundMoves[i].substring(1) > highest
+        if(parseInt(this.state.currentRoundMoves[i].substring(1)) > parseInt(highest)
             && this.state.currentRoundMoves[i].substring(0,1) == this.state.currentSuit){
           highest = this.state.currentRoundMoves[i].substring(1);
           winner = i;
@@ -267,7 +312,7 @@ class DehlaPakad extends React.Component{
     }
     else{
       for(let i = 1; i <=4; ++i){
-        if(this.state.currentRoundMoves[i].substring(1) > highest
+        if(parseInt(this.state.currentRoundMoves[i].substring(1)) > parseInt(highest)
             && this.state.currentRoundMoves[i].substring(0,1) == this.state.trump){
           highest = this.state.currentRoundMoves[i].substring(1);
           winner = i;
@@ -305,16 +350,61 @@ class DehlaPakad extends React.Component{
                         previousRoundWinner: 0,
                         pile: [],
                         currentRoundMoves: {},
-                        roundStartsWith: winner
+                        roundStartsWith: winner,
+                        currentSuit: 'NA'
         });
       }
       else{
         this.setState({turn: winner,
                         previousRoundWinner: winner,
                         pile: pile,
-                        currentRoundMove: {},
-                        roundStartsWith: winner
+                        currentRoundMoves: {},
+                        roundStartsWith: winner,
+                        currentSuit: 'NA'
         });
+      }
+    }
+  }
+
+  calcGameWinner = () => {
+    let team1points = 0;
+    let team2points = 0;
+    for(let i = 0; i < this.state.hands[1].length; ++i){
+      if(this.state.hands[1][i].substring(1) == '10'){
+        team1points += 1;
+      }
+    }
+    for(let i = 0; i < this.state.hands[2].length; ++i){
+      if(this.state.hands[2][i].substring(1) == '10'){
+        team2points += 1;
+      }
+    }
+    let temp1 = this.state.team1points;
+    let temp2 = this.state.team2points;
+    if(team1points == 4){
+      temp1 += 3;
+      this.setState({currentGameWinner: 1, team1points: temp1});
+    }
+    else if(team2points == 4){
+      temp2 += 3;
+      this.setState({currentGameWinner: 2, team2points: temp2});
+    }
+    else if(team1points == 3){
+      temp1 += 2;
+      this.setState({currentGameWinner: 1, team1points: temp1});
+    }
+    else if(team2points == 3){
+      temp2 += 2;
+      this.setState({currentGameWinner: 2, team2points: temp2});
+    }
+    else if(team1points == team2points){
+      if(this.state.hands[1].length > this.state.hands[2].length){
+        temp1 += 1;
+        this.setState({currentGameWinner: 1, team1points: temp1});
+      }
+      else if(this.state.hands[1].length < this.state.hands[2].length){
+        temp2 += 1;
+        this.setState({currentGameWinner: 2, team1points: temp2});
       }
     }
   }
@@ -365,14 +455,12 @@ class DehlaPakad extends React.Component{
           this.setState({currentRoundMoves: thisRound,
                           trump: dataFromServer.move.substring(0,1)
                         });
-          next = this.calcRoundWinner();
-          this.setState({turn: next});
+          this.calcRoundWinner();
         }
         else if(dataFromServer.type === 'roundOver'){
           this.setState({currentRoundMoves: thisRound
           });
-          next = this.calcRoundWinner();
-          this.setState({turn: next});
+          this.calcRoundWinner();
         }
         else if(dataFromServer.type === 'move'){
           this.setState({turn: next,

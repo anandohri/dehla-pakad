@@ -90,9 +90,15 @@ wsServer.on('request', function(request){
           connection.send(JSON.stringify({type: 'roomFull'}));
         }
       }
-      else{
+      else if(move.type === 'nextGame'){
+        shuffle();
         for(key in players){
           move['cards'] = cards[key];
+          players[key].send(JSON.stringify(move));
+        }
+      }
+      else{
+        for(key in players){
           players[key].send(JSON.stringify(move));
         }
       }

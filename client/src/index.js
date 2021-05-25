@@ -5,7 +5,6 @@ import {w3cwebsocket as W3CWebsocket} from 'websocket';
 
 const client = new W3CWebsocket ('ws://192.168.29.116:8000');
 
-
 class DehlaPakad extends React.Component{
   constructor(props){
     super(props);
@@ -101,30 +100,44 @@ class DehlaPakad extends React.Component{
 
   renderCards = () =>{
     const card = [];
+    const suit = {};
     for(let i = 0; i < this.state.cards.length; ++i){
+      if(this.state.cards[i].substring(0, 1) == 'D'){
+        suit[i] = 'Diamonds';
+      }
+      else if(this.state.cards[i].substring(0, 1) == 'H'){
+        suit[i] = 'Hearts';
+      }
+      else if(this.state.cards[i].substring(0, 1) == 'C'){
+        suit[i] = 'Clubs';
+      }
+      else if(this.state.cards[i].substring(0, 1) == 'S'){
+        suit[i] = 'Spades';
+      }
+
       if(this.state.cards[i].substring(1) == '14'){
-        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
-          {this.state.cards[i].substring(0,1) + 'A'}
+        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          A
         </button>);
       }
       else if(this.state.cards[i].substring(1) == '13'){
-        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
-          {this.state.cards[i].substring(0,1) + 'K'}
+        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          K
         </button>);
       }
       else if(this.state.cards[i].substring(1) == '12'){
-        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
-          {this.state.cards[i].substring(0,1) + 'Q'}
+        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          Q
         </button>);
       }
       else if(this.state.cards[i].substring(1) == '11'){
-        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
-          {this.state.cards[i].substring(0,1) + 'J'}
+        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          J
         </button>);
       }
       else{
-        card.push(<button onClick = {this.handleCardClick} value = {this.state.cards[i]}>
-          {this.state.cards[i]}
+        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+          {this.state.cards[i].substring(1)}
         </button>);
       }      
     }
@@ -134,6 +147,52 @@ class DehlaPakad extends React.Component{
   renderBoard = () => {
     const board = [];
     const curr = {1: '', 2: '', 3: '', 4: ''};
+    const card = {1: [], 2: [], 3: [], 4: []};
+    const suit = {1: '', 2: '', 3: '', 4: ''};
+
+    for(let i = 1; i <= 4; ++i){
+      if(this.state.currentRoundMoves[i]){
+        if(this.state.currentRoundMoves[i].substring(0, 1) == 'D'){
+          suit[i] = 'Diamonds';
+        }
+        else if(this.state.currentRoundMoves[i].substring(0, 1) == 'H'){
+          suit[i] = 'Hearts';
+        }
+        else if(this.state.currentRoundMoves[i].substring(0, 1) == 'C'){
+          suit[i] = 'Clubs';
+        }
+        else if(this.state.currentRoundMoves[i].substring(0, 1) == 'S'){
+          suit[i] = 'Spades';
+        }
+
+        if(this.state.currentRoundMoves[i].substring(1) == '14'){
+          card[i].push(<div className = {suit[i]}>
+            A
+          </div>);
+        }
+        else if(this.state.currentRoundMoves[i].substring(1) == '13'){
+          card[i].push(<div className = {suit[i]}>
+            K
+          </div>);
+        }
+        else if(this.state.currentRoundMoves[i].substring(1) == '12'){
+          card[i].push(<div className = {suit[i]}>
+            Q
+          </div>);
+        }
+        else if(this.state.currentRoundMoves[i].substring(1) == '11'){
+          card[i].push(<div className = {suit[i]}>
+            J
+          </div>);
+        }
+        else{
+          card[i].push(<div className = {suit[i]}>
+            {this.state.currentRoundMoves[i].substring(1)}
+          </div>);
+        }
+      }
+    }
+
     if(this.state.winner == 1){
       curr[1] = 'winner';
       curr[3] = 'winner';
@@ -154,33 +213,43 @@ class DehlaPakad extends React.Component{
     else if(this.state.turn == 4){
       curr[4] = 'current';
     }
+
     if(this.state.userId == 1){
       board.push(<div>
                     <div className = {curr[3] + 'placement2'}>
                       Player 3:
-                      {this.state.currentRoundMoves[3]}
+                      {card[3]}
                     </div>
                     <div className = {curr[2] + 'placement1'}>
                       Player 2:
-                      {this.state.currentRoundMoves[2]}
+                      {card[2]}
                     </div>
                     <div className = 'pile'>
-                      turn: {this.state.turn} <br />
-                      trump: {this.state.trump} <br />
-                      currentSuit: {this.state.currentSuit} <br />
-                      previousRoundWinner: {this.state.previousRoundWinner} <br />
-                      roundStartsWith: {this.state.roundStartsWith} <br />
-                      pile: {this.state.pile} <br />
-                      team1hands: {this.state.hands[1]} <br />
-                      team2hands: {this.state.hands[2]}
+                      {this.state.currentGameWinner == 0 ?
+                        <div>
+                          turn: {this.state.turn} <br />
+                          trump: {this.state.trump} <br />
+                          currentSuit: {this.state.currentSuit} <br />
+                          previousRoundWinner: {this.state.previousRoundWinner} <br />
+                          roundStartsWith: {this.state.roundStartsWith} <br />
+                          pile: {this.state.pile} <br />
+                          team1hands: {this.state.hands[1]} <br />
+                          team2hands: {this.state.hands[2]} <br />
+                          team1Points: {this.state.team1points} <br />
+                          team2points: {this.state.team2points}
+                        </div>
+                        : <button className = 'nextGame' onClick = {this.handleNextGame} >
+                            Start Next Game
+                          </button>
+                      }
                     </div>
                     <div className = {curr[4] + 'placement3'}>
                       Player 4:
-                      {this.state.currentRoundMoves[4]}
+                      {card[4]}
                     </div>
                     <div className = {curr[1] + 'placement4'}>
                       Player 1:
-                      {this.state.currentRoundMoves[1]}
+                      {card[1]}
                     </div>
                   </div>);
     }
@@ -188,29 +257,38 @@ class DehlaPakad extends React.Component{
       board.push(<div>
                     <div className = {curr[4] + 'placement2'}>
                       Player 4:
-                      {this.state.currentRoundMoves[4]}
+                      {card[4]}
                     </div>
                     <div className = {curr[3] + 'placement1'}>
                       Player 3:
-                      {this.state.currentRoundMoves[3]}
+                      {card[3]}
                     </div>
                     <div className = 'pile'>
-                      turn: {this.state.turn} <br />
-                      trump: {this.state.trump} <br />
-                      currentSuit: {this.state.currentSuit} <br />
-                      previousRoundWinner: {this.state.previousRoundWinner} <br />
-                      roundStartsWith: {this.state.roundStartsWith} <br />
-                      pile: {this.state.pile} <br />
-                      team1hands: {this.state.hands[1]} <br />
-                      team2hands: {this.state.hands[2]}
+                      {this.state.currentGameWinner == 0 ?
+                        <div>
+                          turn: {this.state.turn} <br />
+                          trump: {this.state.trump} <br />
+                          currentSuit: {this.state.currentSuit} <br />
+                          previousRoundWinner: {this.state.previousRoundWinner} <br />
+                          roundStartsWith: {this.state.roundStartsWith} <br />
+                          pile: {this.state.pile} <br />
+                          team1hands: {this.state.hands[1]} <br />
+                          team2hands: {this.state.hands[2]} <br />
+                          team1Points: {this.state.team1points} <br />
+                          team2points: {this.state.team2points}
+                        </div>
+                        : <button className = 'nextGame' onClick = {this.handleNextGame} >
+                            Start Next Game
+                          </button>
+                      }
                     </div>
                     <div className = {curr[1] + 'placement3'}>
                       Player 1:
-                      {this.state.currentRoundMoves[1]}
+                      {card[1]}
                     </div>
                     <div className = {curr[2] + 'placement4'}>
                       Player 2:
-                      {this.state.currentRoundMoves[2]}
+                      {card[2]}
                     </div>
                   </div>);
     }
@@ -218,29 +296,38 @@ class DehlaPakad extends React.Component{
       board.push(<div>
                     <div className = {curr[1] + 'placement2'}>
                       Player 1:
-                      {this.state.currentRoundMoves[1]}
+                      {card[1]}
                     </div>
                     <div className = {curr[4] + 'placement1'}>
                       Player 4:
-                      {this.state.currentRoundMoves[4]}
+                      {card[4]}
                     </div>
                     <div className = 'pile'>
-                      turn: {this.state.turn} <br />
-                      trump: {this.state.trump} <br />
-                      currentSuit: {this.state.currentSuit} <br />
-                      previousRoundWinner: {this.state.previousRoundWinner} <br />
-                      roundStartsWith: {this.state.roundStartsWith} <br />
-                      pile: {this.state.pile} <br />
-                      team1hands: {this.state.hands[1]} <br />
-                      team2hands: {this.state.hands[2]}
+                      {this.state.currentGameWinner == 0 ?
+                        <div>
+                          turn: {this.state.turn} <br />
+                          trump: {this.state.trump} <br />
+                          currentSuit: {this.state.currentSuit} <br />
+                          previousRoundWinner: {this.state.previousRoundWinner} <br />
+                          roundStartsWith: {this.state.roundStartsWith} <br />
+                          pile: {this.state.pile} <br />
+                          team1hands: {this.state.hands[1]} <br />
+                          team2hands: {this.state.hands[2]} <br />
+                          team1Points: {this.state.team1points} <br />
+                          team2points: {this.state.team2points}
+                        </div>
+                        : <button className = 'nextGame' onClick = {this.handleNextGame} >
+                            Start Next Game
+                          </button>
+                      }
                     </div>
                     <div className = {curr[2] + 'placement3'}>
                       Player 2:
-                      {this.state.currentRoundMoves[2]}
+                      {card[2]}
                     </div>
                     <div className = {curr[3] + 'placement4'}>
                       Player 3:
-                      {this.state.currentRoundMoves[3]}
+                      {card[3]}
                     </div>
                   </div>);
     }
@@ -248,29 +335,38 @@ class DehlaPakad extends React.Component{
       board.push(<div>
                     <div className = {curr[2] + 'placement2'}>
                       Player 2:
-                      {this.state.currentRoundMoves[2]}
+                      {card[2]}
                     </div>
                     <div className = {curr[1] + 'placement1'}>
                       Player 1:
-                      {this.state.currentRoundMoves[1]}
+                      {card[1]}
                     </div>
                     <div className = 'pile'>
-                      turn: {this.state.turn} <br />
-                      trump: {this.state.trump} <br />
-                      currentSuit: {this.state.currentSuit} <br />
-                      previousRoundWinner: {this.state.previousRoundWinner} <br />
-                      roundStartsWith: {this.state.roundStartsWith} <br />
-                      pile: {this.state.pile} <br />
-                      team1hands: {this.state.hands[1]} <br />
-                      team2hands: {this.state.hands[2]}
+                      {this.state.currentGameWinner == 0 ?
+                        <div>
+                          turn: {this.state.turn} <br />
+                          trump: {this.state.trump} <br />
+                          currentSuit: {this.state.currentSuit} <br />
+                          previousRoundWinner: {this.state.previousRoundWinner} <br />
+                          roundStartsWith: {this.state.roundStartsWith} <br />
+                          pile: {this.state.pile} <br />
+                          team1hands: {this.state.hands[1]} <br />
+                          team2hands: {this.state.hands[2]} <br />
+                          team1Points: {this.state.team1points} <br />
+                          team2points: {this.state.team2points}
+                        </div>
+                        : <button className = 'nextGame' onClick = {this.handleNextGame} >
+                            Start Next Game
+                          </button>
+                      }
                     </div>
                     <div className = {curr[3] + 'placement3'}>
                       Player 3:
-                      {this.state.currentRoundMoves[3]}
+                      {card[3]}
                     </div>
                     <div className = {curr[4] + 'placement4'}>
                       Player 4:
-                      {this.state.currentRoundMoves[4]}
+                      {card[4]}
                     </div>
                   </div>);
     }
@@ -428,6 +524,19 @@ class DehlaPakad extends React.Component{
       else if(dataFromServer.type === 'ready'){
         this.setState({readyToStart: true, cards: dataFromServer.cards, turn: 1, roundStartsWith: 1});
       }
+      else if(dataFromServer.type === 'nextGame'){
+        this.setState({cards: dataFromServer.cards,
+                        turn: 1,
+                        roundStartsWith: 1,
+                        currentSuit: 'NA',
+                        currentRoundMoves: {},
+                        pile: [],
+                        hands: {1: [], 2: []},
+                        trump: 'NA',
+                        previousRoundWinner: 0,
+                        currentGameWinner: 0});
+        alert('Starting Next Game');
+      }
       else{
         const thisRound = this.state.currentRoundMoves;
         thisRound[dataFromServer.userId] = dataFromServer.move;
@@ -502,18 +611,6 @@ class DehlaPakad extends React.Component{
         }
       </div>
     )
-  }
-}
-
-class Test extends React.Component{
-  abc = () => {
-    const a = {1: '', 2: ''};
-    a[1] = 'aas';
-    return a;
-  }
-
-  render(){
-    return(this.abc());
   }
 }
 

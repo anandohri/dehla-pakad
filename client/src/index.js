@@ -16,7 +16,7 @@ class DehlaPakad extends React.Component{
                   roundStartsWith: 0,
                   currentSuit: 'NA',
                   currentRoundMoves: {},
-                  pile: [],
+                  placement5: [],
                   hands: {1: [], 2: []},
                   trump: 'NA',
                   previousRoundWinner: 0,
@@ -24,6 +24,7 @@ class DehlaPakad extends React.Component{
                   readyToStart: false,
                   team1points: 0,
                   team2points: 0,
+                  gameCount: 0,
                   currentGameWinner: 0};
   }
 
@@ -48,6 +49,13 @@ class DehlaPakad extends React.Component{
     }
   }
 
+  handleNextGame = () => {
+    client.send(JSON.stringify({
+      type: 'nextGame',
+      gameCount: this.state.gameCount + 1
+    }));
+  }
+
   handleCardClick = (e) => {
     if(this.state.turn == this.state.userId){
       let next = 0;
@@ -66,17 +74,17 @@ class DehlaPakad extends React.Component{
           move: e.target.value
         }));
       }
-      else if(this.state.trump == 'NA' && this.state.currentSuit != e.target.value.substring(0,1)){
-        client.send(JSON.stringify({
-          type: 'setTrump',
-          userId: this.state.userId,
-          move: e.target.value
-        }));
-      }
       else if(this.state.trump == 'NA' && this.state.currentSuit != e.target.value.substring(0,1)
                 && next == this.state.roundStartsWith){
         client.send(JSON.stringify({
           type: 'setTrumpandOver',
+          userId: this.state.userId,
+          move: e.target.value
+        }));
+      }
+      else if(this.state.trump == 'NA' && this.state.currentSuit != e.target.value.substring(0,1)){
+        client.send(JSON.stringify({
+          type: 'setTrump',
           userId: this.state.userId,
           move: e.target.value
         }));
@@ -149,6 +157,8 @@ class DehlaPakad extends React.Component{
     const curr = {1: '', 2: '', 3: '', 4: ''};
     const card = {1: [], 2: [], 3: [], 4: []};
     const suit = {1: '', 2: '', 3: '', 4: ''};
+    let currentSuit = 'NA';
+    let trump = 'NA';
 
     for(let i = 1; i <= 4; ++i){
       if(this.state.currentRoundMoves[i]){
@@ -214,163 +224,278 @@ class DehlaPakad extends React.Component{
       curr[4] = 'current';
     }
 
+    if(this.state.currentSuit == 'D'){
+      currentSuit = 'Diamonds';
+    }
+    else if(this.state.currentSuit == 'H'){
+      currentSuit = 'Hearts';
+    }
+    else if(this.state.currentSuit == 'C'){
+      currentSuit = 'Clubs';
+    }
+    else if(this.state.currentSuit == 'S'){
+      currentSuit = 'Spades';
+    }
+
+    if(this.state.trump == 'D'){
+      trump = 'Diamonds';
+    }
+    else if(this.state.trump == 'H'){
+      trump = 'Hearts';
+    }
+    else if(this.state.trump == 'C'){
+      trump = 'Clubs';
+    }
+    else if(this.state.trump == 'S'){
+      trump = 'Spades';
+    }
+
     if(this.state.userId == 1){
       board.push(<div>
+                    <div className = 'placement1'>
+                      Your Details: <br />
+                      Player: {this.state.userId} <br />
+                      Name: {this.state.userName} <br />
+                      Your Team: Team{this.state.team}
+                    </div>
                     <div className = {curr[3] + 'placement2'}>
                       Player 3:
                       {card[3]}
                     </div>
-                    <div className = {curr[2] + 'placement1'}>
-                      Player 2:
-                      {card[2]}
-                    </div>
-                    <div className = 'pile'>
-                      {this.state.currentGameWinner == 0 ?
-                        <div>
-                          turn: {this.state.turn} <br />
-                          trump: {this.state.trump} <br />
-                          currentSuit: {this.state.currentSuit} <br />
-                          previousRoundWinner: {this.state.previousRoundWinner} <br />
-                          roundStartsWith: {this.state.roundStartsWith} <br />
-                          pile: {this.state.pile} <br />
-                          team1hands: {this.state.hands[1]} <br />
-                          team2hands: {this.state.hands[2]} <br />
-                          team1Points: {this.state.team1points} <br />
-                          team2points: {this.state.team2points}
-                        </div>
-                        : <button className = 'nextGame' onClick = {this.handleNextGame} >
-                            Start Next Game
-                          </button>
+                    <div className = 'placement3'>
+                      This Game Details: <br />
+                      Current Suit: {currentSuit} <br />
+                      Trump: {trump} <br />
+                      {this.state.previousRoundWinner == 0 ?
+                        'Last Hand: NA'
+                        : 'Last Hand: Player' + this.state.previousRoundWinner
                       }
-                    </div>
-                    <div className = {curr[4] + 'placement3'}>
-                      Player 4:
-                      {card[4]}
-                    </div>
-                    <div className = {curr[1] + 'placement4'}>
-                      Player 1:
-                      {card[1]}
-                    </div>
-                  </div>);
-    }
-    else if(this.state.userId == 2){
-      board.push(<div>
-                    <div className = {curr[4] + 'placement2'}>
-                      Player 4:
-                      {card[4]}
-                    </div>
-                    <div className = {curr[3] + 'placement1'}>
-                      Player 3:
-                      {card[3]}
-                    </div>
-                    <div className = 'pile'>
-                      {this.state.currentGameWinner == 0 ?
-                        <div>
-                          turn: {this.state.turn} <br />
-                          trump: {this.state.trump} <br />
-                          currentSuit: {this.state.currentSuit} <br />
-                          previousRoundWinner: {this.state.previousRoundWinner} <br />
-                          roundStartsWith: {this.state.roundStartsWith} <br />
-                          pile: {this.state.pile} <br />
-                          team1hands: {this.state.hands[1]} <br />
-                          team2hands: {this.state.hands[2]} <br />
-                          team1Points: {this.state.team1points} <br />
-                          team2points: {this.state.team2points}
-                        </div>
-                        : <button className = 'nextGame' onClick = {this.handleNextGame} >
-                            Start Next Game
-                          </button>
-                      }
-                    </div>
-                    <div className = {curr[1] + 'placement3'}>
-                      Player 1:
-                      {card[1]}
                     </div>
                     <div className = {curr[2] + 'placement4'}>
                       Player 2:
                       {card[2]}
                     </div>
-                  </div>);
-    }
-    else if(this.state.userId == 3){
-      board.push(<div>
-                    <div className = {curr[1] + 'placement2'}>
-                      Player 1:
-                      {card[1]}
+                    <div className = 'placement5'>
+                      {this.state.currentGameWinner == 0 ?
+                        <div>
+                          <div className = 'subheader'>
+                            Dehla Pakad
+                          </div>
+                          <div className = 'tagline'>
+                            Game: {this.state.gameCount}
+                          </div>
+                        </div>
+                        : <div>
+                            <div className = 'subheader'>
+                                Dehla Pakad
+                            </div>
+                            <div className = 'tagline' onClick = {this.handleNextGame}>
+                              Start Next Game
+                            </div>
+                          </div>
+                      }
                     </div>
-                    <div className = {curr[4] + 'placement1'}>
+                    <div className = {curr[4] + 'placement6'}>
                       Player 4:
                       {card[4]}
                     </div>
-                    <div className = 'pile'>
-                      {this.state.currentGameWinner == 0 ?
-                        <div>
-                          turn: {this.state.turn} <br />
-                          trump: {this.state.trump} <br />
-                          currentSuit: {this.state.currentSuit} <br />
-                          previousRoundWinner: {this.state.previousRoundWinner} <br />
-                          roundStartsWith: {this.state.roundStartsWith} <br />
-                          pile: {this.state.pile} <br />
-                          team1hands: {this.state.hands[1]} <br />
-                          team2hands: {this.state.hands[2]} <br />
-                          team1Points: {this.state.team1points} <br />
-                          team2points: {this.state.team2points}
-                        </div>
-                        : <button className = 'nextGame' onClick = {this.handleNextGame} >
-                            Start Next Game
-                          </button>
-                      }
+                    <div className = 'placement7'>
+                      team1Points: {this.state.team1points} <br /> 
                     </div>
-                    <div className = {curr[2] + 'placement3'}>
-                      Player 2:
-                      {card[2]}
+                    <div className = {curr[1] + 'placement8'}>
+                      Player 1:
+                      {card[1]}
+                    </div>
+                    <div className = 'placement9'>
+                      team2points: {this.state.team2points}
+                    </div>
+                  </div>);
+    }
+    else if(this.state.userId == 2){
+      board.push(<div>
+                    <div className = 'placement1'>
+                      Your Details: <br />
+                      Player: {this.state.userId} <br />
+                      Name: {this.state.userName} <br />
+                      Your Team: Team{this.state.team}
+                    </div>
+                    <div className = {curr[4] + 'placement2'}>
+                      Player 4:
+                      {card[4]}
+                    </div>
+                    <div className = 'placement3'>
+                      This Game Details: <br />
+                      Current Suit: {currentSuit} <br />
+                      Trump: {trump} <br />
+                      {this.state.previousRoundWinner == 0 ?
+                        'Last Hand: NA'
+                        : 'Last Hand: Player' + this.state.previousRoundWinner
+                      }
                     </div>
                     <div className = {curr[3] + 'placement4'}>
                       Player 3:
                       {card[3]}
                     </div>
-                  </div>);
-    }
-    else if(this.state.userId == 4){
-      board.push(<div>
-                    <div className = {curr[2] + 'placement2'}>
-                      Player 2:
-                      {card[2]}
+                    <div className = 'placement5'>
+                      {this.state.currentGameWinner == 0 ?
+                        <div>
+                          <div className = 'subheader'>
+                            Dehla Pakad
+                          </div>
+                          <div className = 'tagline'>
+                            Game: {this.state.gameCount}
+                          </div>
+                        </div>
+                        : <div>
+                            <div className = 'subheader'>
+                                Dehla Pakad
+                            </div>
+                            <div className = 'tagline' onClick = {this.handleNextGame}>
+                              Start Next Game
+                            </div>
+                          </div>
+                      }
                     </div>
-                    <div className = {curr[1] + 'placement1'}>
+                    <div className = {curr[1] + 'placement6'}>
                       Player 1:
                       {card[1]}
                     </div>
-                    <div className = 'pile'>
-                      {this.state.currentGameWinner == 0 ?
-                        <div>
-                          turn: {this.state.turn} <br />
-                          trump: {this.state.trump} <br />
-                          currentSuit: {this.state.currentSuit} <br />
-                          previousRoundWinner: {this.state.previousRoundWinner} <br />
-                          roundStartsWith: {this.state.roundStartsWith} <br />
-                          pile: {this.state.pile} <br />
-                          team1hands: {this.state.hands[1]} <br />
-                          team2hands: {this.state.hands[2]} <br />
-                          team1Points: {this.state.team1points} <br />
-                          team2points: {this.state.team2points}
-                        </div>
-                        : <button className = 'nextGame' onClick = {this.handleNextGame} >
-                            Start Next Game
-                          </button>
-                      }
+                    <div className = 'placement7'>
+                      team1Points: {this.state.team1points} <br /> 
                     </div>
-                    <div className = {curr[3] + 'placement3'}>
-                      Player 3:
-                      {card[3]}
+                    <div className = {curr[2] + 'placement8'}>
+                      Player 2:
+                      {card[2]}
+                    </div>
+                    <div className = 'placement9'>
+                      team2points: {this.state.team2points}
+                    </div>
+                  </div>);
+    }
+    else if(this.state.userId == 3){
+      board.push(<div>
+                    <div className = 'placement1'>
+                      Your Details: <br />
+                      Player: {this.state.userId} <br />
+                      Name: {this.state.userName} <br />
+                      Your Team: Team{this.state.team}
+                    </div>
+                    <div className = {curr[1] + 'placement2'}>
+                      Player 1:
+                      {card[1]}
+                    </div>
+                    <div className = 'placement3'>
+                      This Game Details: <br />
+                      Current Suit: {currentSuit} <br />
+                      Trump: {trump} <br />
+                      {this.state.previousRoundWinner == 0 ?
+                        'Last Hand: NA'
+                        : 'Last Hand: Player' + this.state.previousRoundWinner
+                      }
                     </div>
                     <div className = {curr[4] + 'placement4'}>
                       Player 4:
                       {card[4]}
                     </div>
+                    <div className = 'placement5'>
+                      {this.state.currentGameWinner == 0 ?
+                        <div>
+                          <div className = 'subheader'>
+                            Dehla Pakad
+                          </div>
+                          <div className = 'tagline'>
+                            Game: {this.state.gameCount}
+                          </div>
+                        </div>
+                        : <div>
+                            <div className = 'subheader'>
+                                Dehla Pakad
+                            </div>
+                            <div className = 'tagline' onClick = {this.handleNextGame}>
+                              Start Next Game
+                            </div>
+                          </div>
+                      }
+                    </div>
+                    <div className = {curr[2] + 'placement6'}>
+                      Player 2:
+                      {card[2]}
+                    </div>
+                    <div className = 'placement7'>
+                      team1Points: {this.state.team1points} <br /> 
+                    </div>
+                    <div className = {curr[3] + 'placement8'}>
+                      Player 3:
+                      {card[3]}
+                    </div>
+                    <div className = 'placement9'>
+                      team2points: {this.state.team2points}
+                    </div>
                   </div>);
     }
-    board.push(<div className = 'placement5'>
+    else if(this.state.userId == 4){
+      board.push(<div>
+                    <div className = 'placement1'>
+                      Your Details: <br />
+                      Player: {this.state.userId} <br />
+                      Name: {this.state.userName} <br />
+                      Your Team: Team{this.state.team}
+                    </div>
+                    <div className = {curr[2] + 'placement2'}>
+                      Player 2:
+                      {card[2]}
+                    </div>
+                    <div className = 'placement3'>
+                      This Game Details: <br />
+                      Current Suit: {currentSuit} <br />
+                      Trump: {trump} <br />
+                      {this.state.previousRoundWinner == 0 ?
+                        'Last Hand: NA'
+                        : 'Last Hand: Player' + this.state.previousRoundWinner
+                      }
+                    </div>
+                    <div className = {curr[1] + 'placement4'}>
+                      Player 1:
+                      {card[1]}
+                    </div>
+                    <div className = 'placement5'>
+                      {this.state.currentGameWinner == 0 ?
+                        <div>
+                          <div className = 'subheader'>
+                            Dehla Pakad
+                          </div>
+                          <div className = 'tagline'>
+                            Game: {this.state.gameCount}
+                          </div>
+                        </div>
+                        : <div>
+                            <div className = 'subheader'>
+                                Dehla Pakad
+                            </div>
+                            <div className = 'tagline' onClick = {this.handleNextGame}>
+                              Start Next Game
+                            </div>
+                          </div>
+                      }
+                    </div>
+                    <div className = {curr[3] + 'placement6'}>
+                      Player 3:
+                      {card[3]}
+                    </div>
+                    <div className = 'placement7'>
+                      team1Points: {this.state.team1points} <br /> 
+                    </div>
+                    <div className = {curr[4] + 'placement8'}>
+                      Player 4:
+                      {card[4]}
+                    </div>
+                    <div className = 'placement9'>
+                      team2points: {this.state.team2points}
+                    </div>
+                  </div>);
+    }
+    board.push(<div className = 'placement10'>
+                  Your Cards <br />
                   {this.renderCards()}
                 </div>);
     return board;
@@ -381,7 +506,7 @@ class DehlaPakad extends React.Component{
     let winner = 0;
     let Team1hand = this.state.hands[1].slice();
     let Team2hand = this.state.hands[2].slice();
-    let pile = this.state.pile.slice();
+    let placement5 = this.state.placement5.slice();
     
     if(this.state.currentRoundMoves[1].substring(0,1) == this.state.currentSuit
         && this.state.currentRoundMoves[2].substring(0,1) == this.state.currentSuit
@@ -417,17 +542,17 @@ class DehlaPakad extends React.Component{
     }
 
     for(let i = 1; i <= 4; ++i){
-      pile = pile.concat(this.state.currentRoundMoves[i]);
+      placement5 = placement5.concat(this.state.currentRoundMoves[i]);
     }
     
     if(this.state.cards.length == 0){
       if(winner == 1 || winner == 3){
-        Team1hand = this.state.hands[1].concat(pile);
+        Team1hand = this.state.hands[1].concat(placement5);
       }
       else{
-        Team2hand = this.state.hands[2].concat(pile);
+        Team2hand = this.state.hands[2].concat(placement5);
       }
-      this.setState({pile: [],
+      this.setState({placement5: [],
                       hands: {1: Team1hand, 2: Team2hand},
                       previousRoundWinner: winner
       });
@@ -436,15 +561,15 @@ class DehlaPakad extends React.Component{
     else{
       if(winner == this.state.previousRoundWinner){
         if(winner == 1 || winner == 3){
-          Team1hand = this.state.hands[1].concat(pile);
+          Team1hand = this.state.hands[1].concat(placement5);
         }
         else{
-          Team2hand = this.state.hands[2].concat(pile);
+          Team2hand = this.state.hands[2].concat(placement5);
         }
         this.setState({turn: winner,
                         hands: {1: Team1hand, 2: Team2hand},
                         previousRoundWinner: 0,
-                        pile: [],
+                        placement5: [],
                         currentRoundMoves: {},
                         roundStartsWith: winner,
                         currentSuit: 'NA'
@@ -453,7 +578,7 @@ class DehlaPakad extends React.Component{
       else{
         this.setState({turn: winner,
                         previousRoundWinner: winner,
-                        pile: pile,
+                        placement5: placement5,
                         currentRoundMoves: {},
                         roundStartsWith: winner,
                         currentSuit: 'NA'
@@ -522,7 +647,7 @@ class DehlaPakad extends React.Component{
         alert('Team full, please try other team');
       }
       else if(dataFromServer.type === 'ready'){
-        this.setState({readyToStart: true, cards: dataFromServer.cards, turn: 1, roundStartsWith: 1});
+        this.setState({readyToStart: true, cards: dataFromServer.cards, turn: 1, roundStartsWith: 1, gameCount: 1});
       }
       else if(dataFromServer.type === 'nextGame'){
         this.setState({cards: dataFromServer.cards,
@@ -530,10 +655,11 @@ class DehlaPakad extends React.Component{
                         roundStartsWith: 1,
                         currentSuit: 'NA',
                         currentRoundMoves: {},
-                        pile: [],
+                        placement5: [],
                         hands: {1: [], 2: []},
                         trump: 'NA',
                         previousRoundWinner: 0,
+                        gameCount: dataFromServer.gameCount,
                         currentGameWinner: 0});
         alert('Starting Next Game');
       }
@@ -584,12 +710,29 @@ class DehlaPakad extends React.Component{
     return(
       <div>
         {this.state.isLoggedIn ? 
-          <div>
+          <div className = 'board'>
             {this.state.readyToStart ?
-              <div className = 'board'>
-                {this.renderBoard()}
-              </div>
-              : 'Waiting for other Player to join.'}
+              this.renderBoard()
+              : <div>
+                  <div className = 'placement1' />
+                  <div className = 'placement2' />
+                  <div className = 'placement3' />
+                  <div className = 'placement4' />
+                  <div className = 'placement5' >
+                    <div className = 'subheader'>
+                      Dehla Pakad
+                    </div>
+                    <div className = 'tagline'>
+                      Waiting for Player to Join
+                    </div>
+                  </div>
+                  <div className = 'placement6' />
+                  <div className = 'placement7' />
+                  <div className = 'placement8' />
+                  <div className = 'placement9' />
+                  <div className = 'placement10' />
+                </div>
+            }
           </div>
           : <div>
               <p className = 'header'>Delha Pakad</p>

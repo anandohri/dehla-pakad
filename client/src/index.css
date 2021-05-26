@@ -57,172 +57,290 @@ code {
   margin-bottom: 2%;
 }
 
+.board {
+  margin-top: 60px;
+  margin-left: 170px;
+}
+
+.subheader {
+  text-align: center;
+  font-size: 55px;
+  font-weight: 800;
+  line-height: 95px;
+  width: 331px;
+  margin: 0px;
+  padding: 0px;
+  border-bottom-width: 5px;
+  border-bottom-style: solid;
+  font-family: 'Girassol', cursive;
+}
+
+.tagline {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 45px;
+  width: 331px;
+  margin: 0px;
+  padding: 0px;
+  border-top-width: 5px;
+  border-top-style: solid;
+  font-family: 'Girassol', cursive;
+}
+
 .placement1 {
   position: absolute;
-  min-height: 40%;
-  min-width: 25%;
-  max-width: 25%;
-  margin-top: 10%;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-left: 100px;
+  padding-left: 15px;
 }
 
 .placement2 {
   position: absolute;
-  min-width: 50%;
-  min-height: 20%;
-  max-width: 50%;
-  margin-left: 25%;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  padding-left: 15px;
 }
 
 .placement3 {
   position: absolute;
-  min-height: 40%;
-  min-width: 25%;
-  max-width: 25%;
-  margin-top: 10%;
-  margin-left: 75%;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-left: 770px;
+  padding-left: 15px;
 }
 
 .placement4 {
   position: absolute;
-  min-height: 20%;
-  min-width: 50%;
-  max-width: 50%;
-  margin-left: 25%;
-  margin-top: 30%;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 100px;
+  padding-left: 15px;
 }
 
 .placement5 {
   position: absolute;
-  min-height: 20%;
-  min-width: 100%;
-  margin-top: 40%;
+  border-width: 5px;
+  border-style: solid;
+  line-height: 150px;
+  height: 150px;
+  width: 330px;
+  margin-top: 160px;
+  margin-left: 430px;
 }
 
-.pile {
+.placement6 {
   position: absolute;
-  min-height: 40%;
-  min-width: 48%;
-  max-width: 48%;
-  margin-top: 10%;
-  margin-left: 25%;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 770px;
+  padding-left: 15px;
 }
 
-.currentplacement1 {
+.placement7 {
   position: absolute;
-  background-color: #ff0000;
-  min-height: 40%;
-  min-width: 25%;
-  max-width: 25%;
-  margin-top: 10%;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-left: 100px;
+  margin-top: 320px;
+  padding-left: 15px;
+}
+
+.placement8 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  margin-top: 320px;
+  padding-left: 15px;
+}
+
+.placement9 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-left: 770px;
+  margin-top: 320px;
+  padding-left: 15px;
+}
+
+.placement10 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 975px;
+  margin-top: 480px;
+  margin-left: 100px;
+  padding-left: 15px;
 }
 
 .currentplacement2 {
   position: absolute;
-  background-color: #ff0000;
-  min-width: 50%;
-  min-height: 20%;
-  max-width: 50%;
-  margin-left: 25%;
-}
-
-.currentplacement3 {
-  position: absolute;
-  background-color: #ff0000;
-  min-height: 40%;
-  min-width: 25%;
-  max-width: 25%;
-  margin-top: 10%;
-  margin-left: 75%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff0000;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  padding-left: 15px;
 }
 
 .currentplacement4 {
   position: absolute;
-  background-color: #ff0000;
-  min-height: 20%;
-  min-width: 50%;
-  max-width: 50%;
-  margin-left: 25%;
-  margin-top: 30%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff0000;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 100px;
+  padding-left: 15px;
 }
 
-.winnerplacement1 {
+.currentplacement6 {
   position: absolute;
-  background-color: #ffd700;
-  min-height: 40%;
-  min-width: 25%;
-  max-width: 25%;
-  margin-top: 10%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff0000;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 770px;
+  padding-left: 15px;
+}
+
+.currentplacement8 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff0000;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  margin-top: 320px;
+  padding-left: 15px;
 }
 
 .winnerplacement2 {
   position: absolute;
-  background-color: #ffd700;
-  min-width: 50%;
-  min-height: 20%;
-  max-width: 50%;
-  margin-left: 25%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  padding-left: 15px;
 }
 
-.winnerplacement3 {
+.winnerplacement6 {
   position: absolute;
-  background-color: #ffd700;
-  min-height: 40%;
-  min-width: 25%;
-  max-width: 25%;
-  margin-top: 10%;
-  margin-left: 75%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 770px;
+  padding-left: 15px;
 }
 
 .winnerplacement4 {
   position: absolute;
-  background-color: #ffd700;
-  min-height: 20%;
-  min-width: 50%;
-  max-width: 50%;
-  margin-left: 25%;
-  margin-top: 30%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 100px;
+  padding-left: 15px;
+}
+
+.winnerplacement8 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  margin-top: 320px;
+  padding-left: 15px;
 }
 
 .Clubs {
   background-image: url("Clubs.png");
-  height: 200px;
-  width: 100px;
+  height: 100px;
+  width: 60px;
+  line-height: 100px;
+  margin-top: 10px;
+  margin-right: 15px;
   font-size: 28px;
   font-weight: 900;
-  color: #4169e1;
-  border-radius: 23px;
+  color: #ff0000;
+  border-radius: 10px;
   text-align: center;
 }
 
 .Diamonds {
   background-image: url("Diamonds.png");
-  height: 200px;
-  width: 100px;
+  height: 100px;
+  width: 60px;
+  line-height: 100px;
+  margin-top: 10px;
+  margin-right: 15px;
   font-size: 28px;
   font-weight: 900;
-  color: #4169e1;
-  border-radius: 23px;
+  color: #000000;
+  border-radius: 10px;
   text-align: center;
 }
 
 .Hearts {
-  background-image: url("Hearts.png");
-  height: 200px;
-  width: 100px;
+  background: url("Hearts.png") no-repeat center;
+  height: 100px;
+  width: 60px;
+  line-height: 100px;
+  margin-top: 10px;
+  margin-right: 15px;
   font-size: 28px;
   font-weight: 900;
-  color: #4169e1;
-  border-radius: 23px;
+  color: #000000;
+  border-radius: 10px;
   text-align: center;
 }
 
 .Spades {
   background-image: url("Spades.png");
-  height: 200px;
-  width: 100px;
+  height: 100px;
+  width: 60px;
+  line-height: 100px;
+  margin-top: 10px;
+  margin-right: 15px;
   font-size: 28px;
   font-weight: 900;
-  color: #4169e1;
-  border-radius: 23px;
+  color: #ff0000;
+  border-radius: 10px;
   text-align: center;
 }

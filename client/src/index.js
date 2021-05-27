@@ -16,16 +16,16 @@ class DehlaPakad extends React.Component{
                   roundStartsWith: 0,
                   currentSuit: 'NA',
                   currentRoundMoves: {},
-                  placement5: [],
+                  pile: [],
                   hands: {1: [], 2: []},
                   trump: 'NA',
                   previousRoundWinner: 0,
                   isLoggedIn: false,
-                  readyToStart: false,
+                  readyToStart: true,
                   team1points: 0,
                   team2points: 0,
                   gameCount: 0,
-                  currentGameWinner: 0};
+                  currentGameWinner: 1};
   }
 
   handleUName = (e) => {
@@ -203,11 +203,11 @@ class DehlaPakad extends React.Component{
       }
     }
 
-    if(this.state.winner == 1){
+    if(this.state.currentGameWinner == 1){
       curr[1] = 'winner';
       curr[3] = 'winner';
     }
-    else if(this.state.winner == 2){
+    else if(this.state.currentGameWinner == 2){
       curr[2] = 'winner';
       curr[4] = 'winner';
     }
@@ -506,7 +506,7 @@ class DehlaPakad extends React.Component{
     let winner = 0;
     let Team1hand = this.state.hands[1].slice();
     let Team2hand = this.state.hands[2].slice();
-    let placement5 = this.state.placement5.slice();
+    let pile = this.state.pile.slice();
     
     if(this.state.currentRoundMoves[1].substring(0,1) == this.state.currentSuit
         && this.state.currentRoundMoves[2].substring(0,1) == this.state.currentSuit
@@ -542,17 +542,17 @@ class DehlaPakad extends React.Component{
     }
 
     for(let i = 1; i <= 4; ++i){
-      placement5 = placement5.concat(this.state.currentRoundMoves[i]);
+      pile = pile.concat(this.state.currentRoundMoves[i]);
     }
     
     if(this.state.cards.length == 0){
       if(winner == 1 || winner == 3){
-        Team1hand = this.state.hands[1].concat(placement5);
+        Team1hand = this.state.hands[1].concat(pile);
       }
       else{
-        Team2hand = this.state.hands[2].concat(placement5);
+        Team2hand = this.state.hands[2].concat(pile);
       }
-      this.setState({placement5: [],
+      this.setState({pile: [],
                       hands: {1: Team1hand, 2: Team2hand},
                       previousRoundWinner: winner
       });
@@ -561,15 +561,15 @@ class DehlaPakad extends React.Component{
     else{
       if(winner == this.state.previousRoundWinner){
         if(winner == 1 || winner == 3){
-          Team1hand = this.state.hands[1].concat(placement5);
+          Team1hand = this.state.hands[1].concat(pile);
         }
         else{
-          Team2hand = this.state.hands[2].concat(placement5);
+          Team2hand = this.state.hands[2].concat(pile);
         }
         this.setState({turn: winner,
                         hands: {1: Team1hand, 2: Team2hand},
                         previousRoundWinner: 0,
-                        placement5: [],
+                        pile: [],
                         currentRoundMoves: {},
                         roundStartsWith: winner,
                         currentSuit: 'NA'
@@ -578,7 +578,7 @@ class DehlaPakad extends React.Component{
       else{
         this.setState({turn: winner,
                         previousRoundWinner: winner,
-                        placement5: placement5,
+                        pile: pile,
                         currentRoundMoves: {},
                         roundStartsWith: winner,
                         currentSuit: 'NA'
@@ -655,7 +655,7 @@ class DehlaPakad extends React.Component{
                         roundStartsWith: 1,
                         currentSuit: 'NA',
                         currentRoundMoves: {},
-                        placement5: [],
+                        pile: [],
                         hands: {1: [], 2: []},
                         trump: 'NA',
                         previousRoundWinner: 0,

@@ -13,6 +13,13 @@ code {
     monospace;
 }
 
+.stats {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0px;
+  margin: 0px;
+}
+
 .userName {
   font-size: 18px;
   margin-left: 29.4%;

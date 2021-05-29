@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {w3cwebsocket as W3CWebsocket} from 'websocket';
 
-const client = new W3CWebsocket ('ws://192.168.29.116:8000');
+const client = new W3CWebsocket ('ws://192.168.0.199:8000');
 
 class DehlaPakad extends React.Component{
   constructor(props){
@@ -124,27 +124,27 @@ class DehlaPakad extends React.Component{
       }
 
       if(this.state.cards[i].substring(1) == '14'){
-        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+        card.push(<button className = {suit[i]} style = {{cursor: 'pointer'}} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
           A
         </button>);
       }
       else if(this.state.cards[i].substring(1) == '13'){
-        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+        card.push(<button className = {suit[i]} style = {{cursor: 'pointer'}} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
           K
         </button>);
       }
       else if(this.state.cards[i].substring(1) == '12'){
-        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+        card.push(<button className = {suit[i]} style = {{cursor: 'pointer'}} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
           Q
         </button>);
       }
       else if(this.state.cards[i].substring(1) == '11'){
-        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+        card.push(<button className = {suit[i]} style = {{cursor: 'pointer'}} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
           J
         </button>);
       }
       else{
-        card.push(<button className = {suit[i]} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
+        card.push(<button className = {suit[i]} style = {{cursor: 'pointer'}} onClick = {this.handleCardClick} value = {this.state.cards[i]}>
           {this.state.cards[i].substring(1)}
         </button>);
       }      
@@ -289,7 +289,7 @@ class DehlaPakad extends React.Component{
                             <div className = 'subheader'>
                                 Dehla Pakad
                             </div>
-                            <div className = 'tagline' onClick = {this.handleNextGame}>
+                            <div className = 'tagline' style = {{cursor: 'pointer'}} onClick = {this.handleNextGame}>
                               Start Next Game
                             </div>
                           </div>
@@ -354,7 +354,7 @@ class DehlaPakad extends React.Component{
                             <div className = 'subheader'>
                                 Dehla Pakad
                             </div>
-                            <div className = 'tagline' onClick = {this.handleNextGame}>
+                            <div className = 'tagline' style = {{cursor: 'pointer'}} onClick = {this.handleNextGame}>
                               Start Next Game
                             </div>
                           </div>
@@ -419,7 +419,7 @@ class DehlaPakad extends React.Component{
                             <div className = 'subheader'>
                                 Dehla Pakad
                             </div>
-                            <div className = 'tagline' onClick = {this.handleNextGame}>
+                            <div className = 'tagline' style = {{cursor: 'pointer'}} onClick = {this.handleNextGame}>
                               Start Next Game
                             </div>
                           </div>
@@ -484,7 +484,7 @@ class DehlaPakad extends React.Component{
                             <div className = 'subheader'>
                                 Dehla Pakad
                             </div>
-                            <div className = 'tagline' onClick = {this.handleNextGame}>
+                            <div className = 'tagline' style = {{cursor: 'pointer'}} onClick = {this.handleNextGame}>
                               Start Next Game
                             </div>
                           </div>

@@ -32,6 +32,7 @@ code {
 }
 
 .login {
+  cursor: pointer;
   font-size: 22px;
   border-radius: 23px;
   height: 45px;
@@ -40,7 +41,12 @@ code {
   background-color: #ff091b;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .team {
+  cursor: pointer;
   font-size: 18px;
   border-radius: 23px;
   border-width: 2px;

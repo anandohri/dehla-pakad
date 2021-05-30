@@ -705,13 +705,13 @@ class DehlaPakad extends React.Component{
         else if(dataFromServer.type === 'setTrumpandOver'){
           this.setState({currentRoundMoves: thisRound,
                           trump: dataFromServer.move.substring(0,1)
-                        });
-          this.calcRoundWinner();
+          });
+          setTimeout(() => {this.calcRoundWinner()}, 2000);
         }
         else if(dataFromServer.type === 'roundOver'){
           this.setState({currentRoundMoves: thisRound
           });
-          this.calcRoundWinner();
+          setTimeout(() => {this.calcRoundWinner()}, 2000);
         }
         else if(dataFromServer.type === 'move'){
           this.setState({turn: next,
@@ -761,7 +761,7 @@ class DehlaPakad extends React.Component{
               <div className = 'selectTeam'>
                 Select Team:
                 <select className = 'team' onChange = {this.handleTeam} >
-                  <option value = '0' />
+                  <option value = '0' hidden disabled selected value>--Select a team--</option>
                   <option value = '1' >Team 1</option>
                   <option value = '2' >Team 2</option>
                 </select>

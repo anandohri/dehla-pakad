@@ -21,11 +21,13 @@ code {
 }
 
 .userName {
+  padding-left: 15px;
+  outline: none;
   font-size: 18px;
-  margin-left: 29.4%;
+  margin-left: 450px;
   border-radius: 20px;
   height: 40px;
-  width: 450px;
+  width: 440px;
   border-width: 2px;
   border-style: ridge;
   background-color: #f09e6c;
@@ -46,20 +48,22 @@ code {
 }
 
 .team {
+  padding-left: 15px;
+  outline: none;
   cursor: pointer;
   font-size: 18px;
   border-radius: 23px;
   border-width: 2px;
   border-style: ridge;
   height: 45px;
-  width: 150px;
+  width: 190px;
   margin-left: 20px;
   background-color: #f09e6c;
 }
 
 .selectTeam {
   margin-top: 10px;
-  margin-left: 42.6%;
+  margin-left: 615px;
 }
 
 .header {
@@ -303,7 +307,7 @@ code {
 }
 
 .Clubs {
-  background-image: url("Clubs.png");
+  background-image: url("./images/Clubs.png");
   height: 100px;
   width: 60px;
   line-height: 100px;
@@ -317,7 +321,7 @@ code {
 }
 
 .Diamonds {
-  background-image: url("Diamonds.png");
+  background-image: url("./images/Diamonds.png");
   height: 100px;
   width: 60px;
   line-height: 100px;
@@ -331,7 +335,7 @@ code {
 }
 
 .Hearts {
-  background: url("Hearts.png") no-repeat center;
+  background: url("./images/Hearts.png");
   height: 100px;
   width: 60px;
   line-height: 100px;
@@ -345,7 +349,7 @@ code {
 }
 
 .Spades {
-  background-image: url("Spades.png");
+  background-image: url("./images/Spades.png");
   height: 100px;
   width: 60px;
   line-height: 100px;

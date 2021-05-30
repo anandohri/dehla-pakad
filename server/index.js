@@ -1,10 +1,20 @@
 const webSocketsServerPort = 8000;
+const expressClientPort = 3000;
 const webSocketServer = require('websocket').server;
+
 const http = require('http');
 // Spinning the http server and the websocket server.
 const server = http.createServer();
 server.listen(webSocketsServerPort);
+
 console.log('listening to port 8000');
+
+const express = require('express');
+const app = express();
+app.use(express.static("build"));
+app.listen(expressClientPort);
+
+console.log('listening to port 3000');
 
 const players = {};
 const cards = {};

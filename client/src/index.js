@@ -751,7 +751,7 @@ class DehlaPakad extends React.Component{
             }
           </div>
           : <div>
-              <p className = 'header'>Delha Pakad</p>
+              <p className = 'header'>Dehla Pakad</p>
               <br />
               <input className = 'userName' placeholder = 'Enter Username' onChange = {this.handleUName} />
               <button className = 'login' onClick = {this.handleLogin}>

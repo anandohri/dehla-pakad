@@ -300,6 +300,7 @@ class DehlaPakad extends React.Component{
                       {card[4]}
                     </div>
                     <div className = 'placement7'>
+                      <div className = 'stats'>Hands in the Pile: </div>{this.state.pile.length / 4} <br />
                       <div className = 'stats'>Hands Captured so far:<br /></div>
                       Team 1: {this.state.hands[1].length / 4}<br />
                       Team 2: {this.state.hands[2].length / 4}
@@ -365,6 +366,7 @@ class DehlaPakad extends React.Component{
                       {card[1]}
                     </div>
                     <div className = 'placement7'>
+                      <div className = 'stats'>Hands in the Pile: </div>{this.state.pile.length / 4} <br />
                       <div className = 'stats'>Hands Captured so far:<br /></div>
                       Team 1: {this.state.hands[1].length / 4}<br />
                       Team 2: {this.state.hands[2].length / 4}
@@ -430,6 +432,7 @@ class DehlaPakad extends React.Component{
                       {card[2]}
                     </div>
                     <div className = 'placement7'>
+                      <div className = 'stats'>Hands in the Pile: </div>{this.state.pile.length / 4} <br />
                       <div className = 'stats'>Hands Captured so far:<br /></div>
                       Team 1: {this.state.hands[1].length / 4}<br />
                       Team 2: {this.state.hands[2].length / 4}
@@ -495,6 +498,7 @@ class DehlaPakad extends React.Component{
                       {card[3]}
                     </div>
                     <div className = 'placement7'>
+                      <div className = 'stats'>Hands in the Pile: </div>{this.state.pile.length / 4} <br />
                       <div className = 'stats'>Hands Captured so far:<br /></div>
                       Team 1: {this.state.hands[1].length / 4}<br />
                       Team 2: {this.state.hands[2].length / 4}

@@ -1,0 +1,363 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #6da7e6;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.stats {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0px;
+  margin: 0px;
+}
+
+.userName {
+  padding-left: 15px;
+  outline: none;
+  font-size: 18px;
+  margin-left: 450px;
+  border-radius: 20px;
+  height: 40px;
+  width: 440px;
+  border-width: 2px;
+  border-style: ridge;
+  background-color: #f09e6c;
+}
+
+.login {
+  cursor: pointer;
+  font-size: 22px;
+  border-radius: 23px;
+  height: 45px;
+  width: 150px;
+  margin-left: 20px;
+  background-color: #ff091b;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.team {
+  padding-left: 15px;
+  outline: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 23px;
+  border-width: 2px;
+  border-style: ridge;
+  height: 45px;
+  width: 190px;
+  margin-left: 20px;
+  background-color: #f09e6c;
+}
+
+.selectTeam {
+  margin-top: 10px;
+  margin-left: 615px;
+}
+
+.header {
+  text-align: center;
+  font-size: 120px;
+  font-weight: 800;
+  font-family: 'Girassol', cursive;
+  margin-bottom: 2%;
+}
+
+.board {
+  margin-top: 60px;
+  margin-left: 170px;
+}
+
+.subheader {
+  text-align: center;
+  font-size: 55px;
+  font-weight: 800;
+  line-height: 95px;
+  width: 331px;
+  margin: 0px;
+  padding: 0px;
+  border-bottom-width: 5px;
+  border-bottom-style: solid;
+  font-family: 'Girassol', cursive;
+}
+
+.tagline {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 45px;
+  width: 331px;
+  margin: 0px;
+  padding: 0px;
+  border-top-width: 5px;
+  border-top-style: solid;
+  font-family: 'Girassol', cursive;
+}
+
+.placement1 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-left: 100px;
+  padding-left: 15px;
+}
+
+.placement2 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  padding-left: 15px;
+}
+
+.placement3 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-left: 770px;
+  padding-left: 15px;
+}
+
+.placement4 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 100px;
+  padding-left: 15px;
+}
+
+.placement5 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  line-height: 150px;
+  height: 150px;
+  width: 330px;
+  margin-top: 160px;
+  margin-left: 430px;
+}
+
+.placement6 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 770px;
+  padding-left: 15px;
+}
+
+.placement7 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-left: 100px;
+  margin-top: 320px;
+  padding-left: 15px;
+}
+
+.placement8 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  margin-top: 320px;
+  padding-left: 15px;
+}
+
+.placement9 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 305px;
+  margin-left: 770px;
+  margin-top: 320px;
+  padding-left: 15px;
+}
+
+.placement10 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  height: 150px;
+  width: 975px;
+  margin-top: 480px;
+  margin-left: 100px;
+  padding-left: 15px;
+}
+
+.currentplacement2 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff0000;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  padding-left: 15px;
+}
+
+.currentplacement4 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff0000;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 100px;
+  padding-left: 15px;
+}
+
+.currentplacement6 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff0000;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 770px;
+  padding-left: 15px;
+}
+
+.currentplacement8 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff0000;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  margin-top: 320px;
+  padding-left: 15px;
+}
+
+.winnerplacement2 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  padding-left: 15px;
+}
+
+.winnerplacement6 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 770px;
+  padding-left: 15px;
+}
+
+.winnerplacement4 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700;
+  height: 150px;
+  width: 305px;
+  margin-top: 160px;
+  margin-left: 100px;
+  padding-left: 15px;
+}
+
+.winnerplacement8 {
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700;
+  height: 150px;
+  width: 315px;
+  margin-left: 430px;
+  margin-top: 320px;
+  padding-left: 15px;
+}
+
+.Clubs {
+  background-image: url("./images/Clubs.png");
+  height: 100px;
+  width: 60px;
+  line-height: 100px;
+  margin-top: 10px;
+  margin-right: 15px;
+  font-size: 28px;
+  font-weight: 900;
+  color: #ff0000;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.Diamonds {
+  background-image: url("./images/Diamonds.png");
+  height: 100px;
+  width: 60px;
+  line-height: 100px;
+  margin-top: 10px;
+  margin-right: 15px;
+  font-size: 28px;
+  font-weight: 900;
+  color: #000000;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.Hearts {
+  background: url("./images/Hearts.png");
+  height: 100px;
+  width: 60px;
+  line-height: 100px;
+  margin-top: 10px;
+  margin-right: 15px;
+  font-size: 28px;
+  font-weight: 900;
+  color: #000000;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.Spades {
+  background-image: url("./images/Spades.png");
+  height: 100px;
+  width: 60px;
+  line-height: 100px;
+  margin-top: 10px;
+  margin-right: 15px;
+  font-size: 28px;
+  font-weight: 900;
+  color: #ff0000;
+  border-radius: 10px;
+  text-align: center;
+}

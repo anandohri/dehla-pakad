@@ -15,4 +15,32 @@ The rules are as follows:
             c. 2 10s: Team with more number of hands get 1 point.
 
 
-Check out the screen captures in the screenshots folder.
+Check out the screen captures:
+
+Homescreen:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture1.PNG?raw=true)
+
+Logging in as Team 1:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture2.PNG?raw=true)
+
+Waiting while the other players log in:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture3.PNG?raw=true)
+
+Popup in case already 2 players logged in for the team before you:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture4.PNG?raw=true)
+
+Popup in case already 4 players have joined the game:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture5.PNG?raw=true)
+
+The trump being decided:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture9.PNG?raw=true)
+
+Captures of different stages in the game:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture6.PNG?raw=true)
+
+![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture7.PNG?raw=true)
+
+![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture8.PNG?raw=true)
+
+![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture10.PNG?raw=true)
+
+Last move of the game:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture11.PNG?raw=true)
+
+Winners Declared:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture12.PNG?raw=true)
+
+Popup when starting the next game:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture13.PNG?raw=true)
+
+Next game:![alt text](https://github.com/anandohri/dehla-pakad/blob/main/Screenshots/Capture14.PNG?raw=true)
